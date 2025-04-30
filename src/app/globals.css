@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #E1DFDD;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+
+@font-face {
+  font-family: 'InputMonoLight';
+  src: url('/fonts/InputMonoLight.ttf') format('truetype');
+  font-weight: 400; /* Normal weight */
+  font-style: normal; /* Regular style */
+}
+@font-face {
+  font-family: 'InputMonoRegular';
+  src: url('/fonts/InputMonoRegular.ttf') format('truetype');
+  font-weight: 400; /* Normal weight */
+  font-style: normal; /* Regular style */
+}
+@font-face {
+  font-family: 'Kelsi';
+  src: url('/fonts/Kelsi-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Acma';
+  src: url('/fonts/PPAcma-Semibold.otf') format('opentype');
+}
+@font-face {
+  font-family: 'DotBold';
+  src: url('/fonts/OffBitTrial-101.otf') format('opentype');
+}

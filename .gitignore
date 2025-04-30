@@ -17,9 +17,6 @@
 /.next/
 /out/
 
-# fonts
-/public/fonts
-
 # production
 /build
 

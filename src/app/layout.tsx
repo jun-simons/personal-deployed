@@ -4,6 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Jun Simons",
   description: "Jun's Personal Website",
+  icons: {
+    icon: '/owl.png',            // your main PNG
+    apple: '/owl.png',           // optional Apple icon
+  },
 };
 
 export default function RootLayout({

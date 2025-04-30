@@ -65,33 +65,62 @@ export default function Home() {
   }, [animate, scope]);
 
   // Scroll event listener for triggering the second animation
+  // useEffect(() => {
+  //   const handleScroll = (e: WheelEvent) => {
+  //     e.preventDefault(); // Prevent the default scroll behavior
+
+  //     if (e.deltaY > 0 && !hasScrolled) {
+  //       setHasScrolled(true); // Mark that the scroll animation has been triggered
+
+  //       // Trigger scroll animation
+  //       animate(
+  //         scope.current,
+  //         { y: -200, scale: 1, opacity: 0 },
+  //         { duration: 0.5, ease: 'easeOut' }
+  //       );
+  //     }
+  //   };
+
+  //   // Add scroll event listener
+  //   window.addEventListener('wheel', handleScroll, { passive: false });
+
+  //   return () => {
+  //     // Cleanup scroll event listener
+  //     window.removeEventListener('wheel', handleScroll);
+  //   };
+  // }, [animate, hasScrolled, scope]);
+
   useEffect(() => {
-    const handleScroll = (e: WheelEvent) => {
-      e.preventDefault(); // Prevent the default scroll behavior
-
-      if (e.deltaY > 0 && !hasScrolled) {
-        setHasScrolled(true); // Mark that the scroll animation has been triggered
-
-        // Trigger scroll animation
-        animate(
-          scope.current,
-          { y: -200, scale: 1, opacity: 0 },
-          { duration: 0.5, ease: 'easeOut' }
-        );
+    const trigger = () => {
+      if (!hasScrolled) {
+        setHasScrolled(true)
+        // your scroll-animation:
+        animate(scope.current, { y: -200, scale: 1, opacity: 0 }, { duration: 0.5, ease: 'easeOut' })
       }
-    };
-
-    // Add scroll event listener
-    window.addEventListener('wheel', handleScroll, { passive: false });
-
+    }
+  
+    const onScroll = () => {
+      if (window.scrollY > 10) trigger()
+    }
+  
+    // listen for any scrolling
+    window.addEventListener('scroll', onScroll, { passive: true })
+  
+    // optional: could add touch drags
+    // window.addEventListener('touchmove', onScroll, { passive: true })
+  
+    // fallback: after 6s, if nothing happened, auto-fire
+    const timer = setTimeout(trigger, 6000)
+  
     return () => {
-      // Cleanup scroll event listener
-      window.removeEventListener('wheel', handleScroll);
-    };
-  }, [animate, hasScrolled, scope]);
+      clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('touchmove', onScroll)
+    }
+  }, [hasScrolled, animate, scope])
 
   return (
-    <main className="flex h-screen items-center justify-center bg-background dark:bg-black">
+    <main className="flex h-screen items-center justify-center bg-background dark:bg-black overflow-hidden">
       {/* Canvas for the grid background */}
 
       <Instrument currentMode={currentMode} pitchModes={pitchModes}  />
@@ -103,7 +132,7 @@ export default function Home() {
       <motion.h1
         ref={scope} // Connect to useAnimate
         initial={{ opacity: 0, y: -150 }} // Initial state
-        className="text-[6rem] font-display tracking-widest text-center z-20"
+        className="text-[13vw] sm:text-[12vw] md:text-[10vw] lg:text-[7em] font-display tracking-widest text-center z-20"
       >
         Jun Simons
       </motion.h1>
@@ -118,7 +147,7 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&lsquo;m a junior at RPI studying Computer Science. I currently work at&nbsp;
+            I&rsquo;m a junior at RPI studying Computer Science. I currently work at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 
@@ -142,7 +171,7 @@ export default function Home() {
             on the Advanced Computing team, doing software and cloud engineering.
           </p>
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 ">
-              In my free time, I often play music, make art, and dance. I&lsquo;m interested in the 
+              In my free time, I often play music, make art, and dance. I&rsquo;m interested in the 
               art-technology intersection. 
           </p>
           

@@ -1,6 +1,6 @@
 'use client';
 import { motion, useAnimate } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import Instrument from "../components/instrument";
@@ -118,7 +118,7 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I'm a junior at RPI studying Computer Science. I currently work at&nbsp;
+            I&lsquo;m a junior at RPI studying Computer Science. I currently work at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 
@@ -142,7 +142,7 @@ export default function Home() {
             on the Advanced Computing team, doing software and cloud engineering.
           </p>
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 ">
-              In my free time, I often play music, make art, and dance. I'm interested in the 
+              In my free time, I often play music, make art, and dance. I&lsquo;m interested in the 
               art-technology intersection. 
           </p>
           

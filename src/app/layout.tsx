@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Jun Simons",
-  description: "Jun's Personal Website",
-  icons: {
-    icon: '/owl.png',            // your main PNG
-    apple: '/owl.png',           // optional Apple icon
-  },
-};
+// export const metadata: Metadata = {
+//   title: "Jun Simons",
+//   description: "Jun's Personal Website",
+//   icons: {
+//     icon: '/owl.png',            // your main PNG
+//     apple: '/owl.png',           // optional Apple icon
+//   },
+// };
 
 export default function RootLayout({
   children,
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
 
     <html lang="en">
-      <body className="bg-background h-full overflow-y-auto text-foreground">
+      <body className="bg-background h-full  text-foreground">
         {/* <Navbar /> */}
         <main>{children}</main>
       </body>

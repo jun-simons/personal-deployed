@@ -44,8 +44,8 @@ const Navbar = ({ visible }: NavbarProps) => {
       transition={{ delay: 0.85, duration: 0.75, ease: 'easeOut' }}
       className="
         fixed top-0 left-0 w-full
-        bg-transparent dark:bg-transparent
         font-mono
+        bg-background
         p-2 sm:p-4        /* ↓ smaller padding on mobile */
         z-30
       "

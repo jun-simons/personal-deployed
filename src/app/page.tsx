@@ -65,30 +65,30 @@ export default function Home() {
   }, [animate, scope]);
 
   // Scroll event listener for triggering the second animation
-  // useEffect(() => {
-  //   const handleScroll = (e: WheelEvent) => {
-  //     e.preventDefault(); // Prevent the default scroll behavior
+  useEffect(() => {
+    const handleScroll = (e: WheelEvent) => {
+      e.preventDefault(); // Prevent the default scroll behavior
 
-  //     if (e.deltaY > 0 && !hasScrolled) {
-  //       setHasScrolled(true); // Mark that the scroll animation has been triggered
+      if (e.deltaY > 0 && !hasScrolled) {
+        setHasScrolled(true); // Mark that the scroll animation has been triggered
 
-  //       // Trigger scroll animation
-  //       animate(
-  //         scope.current,
-  //         { y: -200, scale: 1, opacity: 0 },
-  //         { duration: 0.5, ease: 'easeOut' }
-  //       );
-  //     }
-  //   };
+        // Trigger scroll animation
+        animate(
+          scope.current,
+          { y: -200, scale: 1, opacity: 0 },
+          { duration: 0.5, ease: 'easeOut' }
+        );
+      }
+    };
 
-  //   // Add scroll event listener
-  //   window.addEventListener('wheel', handleScroll, { passive: false });
+    // Add scroll event listener
+    window.addEventListener('wheel', handleScroll, { passive: false });
 
-  //   return () => {
-  //     // Cleanup scroll event listener
-  //     window.removeEventListener('wheel', handleScroll);
-  //   };
-  // }, [animate, hasScrolled, scope]);
+    return () => {
+      // Cleanup scroll event listener
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, [animate, hasScrolled, scope]);
 
   useEffect(() => {
     const trigger = () => {
@@ -156,7 +156,7 @@ export default function Home() {
             >
               MIT Lincoln Laboratory
             </a>{' '}
-            as a technical assistant doing Software Engineering, Algorithm Design, and AI/ML Work.
+             on Software Engineering, Algorithm Design, and AI/ML research.
           </p>
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
               I previously did a co-op at&nbsp;

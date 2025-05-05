@@ -10,7 +10,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
       <Navbar visible={true} />
 
       {/* make room for the fixed nav */}
-      <div className="pt-20">
+      <div className="pt-20 h-screen overflow-y-auto">
         {children}
       </div>
     </>

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 
 // export const metadata: Metadata = {
@@ -18,7 +17,7 @@ export default function RootLayout({
   return (
 
     <html lang="en">
-      <body className="bg-background h-full  text-foreground">
+      <body className="bg-background h-full text-foreground">
         {/* <Navbar /> */}
         <main>{children}</main>
       </body>

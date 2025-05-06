@@ -107,10 +107,10 @@ export default function Home() {
     window.addEventListener('scroll', onScroll, { passive: true })
   
     // optional: could add touch drags
-    // window.addEventListener('touchmove', onScroll, { passive: true })
+    window.addEventListener('touchmove', onScroll, { passive: true })
   
     // fallback: after 6s, if nothing happened, auto-fire
-    const timer = setTimeout(trigger, 6000)
+    const timer = setTimeout(trigger, 5000)
   
     return () => {
       clearTimeout(timer)
@@ -174,7 +174,6 @@ export default function Home() {
               In my free time, I often play music, make art, and dance. I&rsquo;m interested in the 
               art-technology intersection. 
           </p>
-          
         </div>
         
       </motion.section>

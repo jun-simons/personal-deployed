@@ -1,9 +1,5 @@
 ---
-<<<<<<< HEAD
 title: "Parallel Contour Detection with CUDA/MPI"
-=======
-title: "Parallel Contour Detection"
->>>>>>> 1fdb8a353f0d224c427cbbae00a93f22e2a19a16
 date: "2025-04-20"
 tag:   "project"
 ---
@@ -24,8 +20,4 @@ Strong and weak scaling tests were performed for the algorithm runtime and file 
 
 *This project is designed to run on NVIDIA GPUs and with IBM Spectrum MPI*, though it would likely work with other CPUs.
 
-<<<<<<< HEAD
 [<ins>View code on GitHub</ins>](https://github.com/jun-simons/ParallelContourDetection)
-=======
-[<ins>View code on GitHub</ins>](https://github.com/jun-simons/ParallelContourDetection)
->>>>>>> 1fdb8a353f0d224c427cbbae00a93f22e2a19a16

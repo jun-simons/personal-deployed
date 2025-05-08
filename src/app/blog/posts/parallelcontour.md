@@ -1,5 +1,5 @@
 ---
-title: "Parallel Contour Detection"
+title: "Parallel Contour Detection with CUDA/MPI"
 date: "2025-04-20"
 tag:   "project"
 ---

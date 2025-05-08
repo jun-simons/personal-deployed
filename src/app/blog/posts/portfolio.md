@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 title: "My Personal Website"
+=======
+title: "Personal Site"
+>>>>>>> 1fdb8a353f0d224c427cbbae00a93f22e2a19a16
 date:  "2024-04-01"
 tag:   "project"
 ---
@@ -10,4 +14,8 @@ This site is an instrument! I use `AudioContext` to play pitches, with frequenci
 
 I'm not really a web developer, but I enjoy building fun websites. To keep it simple, I wrote the animations in TypeScript and CSS.
 
+<<<<<<< HEAD
 [View code on GitHub](https://github.com/jun-simons/personal-site)
+=======
+[View code on GitHub](https://github.com/jun-simons/personal-site)
+>>>>>>> 1fdb8a353f0d224c427cbbae00a93f22e2a19a16

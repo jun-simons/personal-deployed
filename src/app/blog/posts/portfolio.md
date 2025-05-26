@@ -10,4 +10,4 @@ This site is an instrument! I use `AudioContext` to play pitches, with frequenci
 
 I'm not really a web developer, but I enjoy building fun websites. To keep it simple, I wrote the animations in TypeScript and CSS.
 
-[View code on GitHub](https://github.com/jun-simons/personal-site)
+[View code on GitHub](https://github.com/jun-simons/personal-deployed)

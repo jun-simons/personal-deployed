@@ -4,7 +4,6 @@ date: "2025-05-08"
 tag:   "project"
 ---
 
-
 *GitHub, but for Graphs.*
 
 [<ins><b>ChronoGraph</b></ins>](https://github.com/jun-simons/ChronoGraph) is a graph library for *Versioned Graphs* written in C++. It supports standard graph operations and algorithms, and all changes made to a graph are stored as *events* with associated timestamps.  

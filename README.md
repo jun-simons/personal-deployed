@@ -1,4 +1,4 @@
-I built this simple site using NextJS, Typescript, and Tailwind.
+I built this site using NextJS, Typescript, and Tailwind.
 
 The homescreen includes a playable instrument, built as a React component. I use AudioContext to play pitches, with frequencies computed based on cursor position and musical scale ratios.
 

@@ -6,7 +6,7 @@ tag:   "project"
 
 *GitHub, but for Graphs.*
 
-[<ins><b>ChronoGraph</b></ins>](https://github.com/jun-simons/ChronoGraph) is a graph library for *Versioned Graphs* written in C++. It supports standard graph operations and algorithms, and all changes made to a graph are stored as *events* with associated timestamps.  
+[<ins><b>ChronoGraph</b></ins>](https://github.com/jun-simons/ChronoGraph) is a graph library for *Versioned Graphs* written in C++. It supports standard graph operations and algorithms, and all changes made to a graph are stored as *events* with associated timestamps. The API is also made accessable to Python via PyBind11.
 
 Graphs are created as repositories, for which the library supports:
 - Commit handling and organization

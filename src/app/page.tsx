@@ -158,7 +158,7 @@ export default function Home() {
             </a>{' '}
              on Software Engineering, Algorithm Design, and AI/ML research.
           </p>
-          <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
+          <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
               I previously did a co-op at&nbsp;
             <a 
               href="https://innovativemedicine.jnj.com/" 
@@ -170,7 +170,7 @@ export default function Home() {
             </a>{' '}
             on the Advanced Computing team, doing software and cloud engineering.
           </p>
-          <p className="text-xl text-gray-700 font-mono dark:text-gray-300 ">
+          <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 ">
               In my free time, I often play music, make art, and dance. I&rsquo;m interested in the 
               art-technology intersection. 
           </p>

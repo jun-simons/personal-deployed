@@ -147,7 +147,7 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&rsquo;m a junior at RPI studying Computer Science. I currently work at&nbsp;
+            I&rsquo;m a senior at RPI studying Computer Science. I currently work at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 

@@ -156,7 +156,7 @@ export default function Home() {
             >
               MIT Lincoln Laboratory
             </a>{' '}
-             on Software Engineering, Algorithm Design, and AI/ML research.
+             doing Software Engineering, Algorithm Design, and AI/ML research.
           </p>
           <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
               I previously did a co-op at&nbsp;

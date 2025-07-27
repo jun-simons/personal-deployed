@@ -8,7 +8,7 @@ Flex Preview is a VSCode Extension for mobile device simulation, making it easy 
 
 I built this after seeing existing options had poor functionality, limited device options, or required a paid license.
 
-The project is written in Typescript, with HTML/CSS/JS webview.
+This project is written in Typescript, with HTML/CSS/JS webview.
 
 [<ins>View on GitHub</ins>](https://github.com/jun-simons/FlexPreview)
 

@@ -13,9 +13,10 @@ type PitchMode = "pentatonic" | "just_c" | "blues";
 interface MusicalGridProps {
   currentMode: PitchMode; // Pass the currentMode as a prop
   pitchModes: Record<PitchMode, { baseFrequency: number; frequencyStep?: number; scale?: number[] }>;
+  isMuted: boolean;
 }
 
-export default function Instrument({ currentMode, pitchModes }: MusicalGridProps) {
+export default function Instrument({ currentMode, pitchModes, isMuted }: MusicalGridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -37,6 +38,8 @@ export default function Instrument({ currentMode, pitchModes }: MusicalGridProps
 
     // Sound logic
     function playSound(frequency: number) {
+      if (isMuted) return;
+
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
       oscillator.connect(gainNode);
@@ -149,7 +152,7 @@ export default function Instrument({ currentMode, pitchModes }: MusicalGridProps
         window.removeEventListener("click", handleClick);
         window.removeEventListener("resize", handleResize);
     };
-  }, [currentMode, pitchModes]);
+  }, [currentMode, pitchModes, isMuted]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 z-10" />;
 }

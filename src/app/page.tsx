@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import Instrument from "../components/instrument";
-import Navbar from "../components/navbar"
+import Navbar from "../components/navbar";
+import MuteButton from "../components/mute-button";
 
 declare global {
   interface Window {
@@ -54,6 +55,7 @@ export default function Home() {
 
   const [scope, animate] = useAnimate(); // useAnimate hook for controlling animations
   const [hasScrolled, setHasScrolled] = useState(false); // Tracks if the user has scrolled
+  const [isMuted, setIsMuted] = useState(true);
 
   // Trigger initial animation on page load
   useEffect(() => {
@@ -123,7 +125,9 @@ export default function Home() {
     <main className="flex h-screen items-center justify-center bg-background dark:bg-black overflow-hidden">
       {/* Canvas for the grid background */}
 
-      <Instrument currentMode={currentMode} pitchModes={pitchModes}  />
+      <Instrument currentMode={currentMode} pitchModes={pitchModes} isMuted={isMuted} />
+
+      <MuteButton isMuted={isMuted} onToggle={() => setIsMuted((m) => !m)} />
 
       {/* Navbar - Only render if scrolled */}
       <Navbar visible={hasScrolled} />

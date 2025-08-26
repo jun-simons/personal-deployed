@@ -27,7 +27,7 @@ export default function Theremin({ isMuted }: ThereminProps) {
 
   const getVolume = (x: number, rect: DOMRect) => {
     const min = 0;
-    const max = 0.3;
+    const max = 0.25;
     const relative = Math.min(Math.max((x - rect.left) / rect.width, 0), 1);
     return min + relative * (max - min);
   };

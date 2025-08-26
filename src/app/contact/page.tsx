@@ -90,7 +90,7 @@ export default function Blog() {
         </div>
         <Theremin isMuted={isMuted} />
         <p className="text-center text-sm text-gray-600 dark:text-gray-400 font-monoreg">
-          ^this box is a theramin
+          ^this box is a theramin (click to play)
         </p>
         <MuteButton isMuted={isMuted} onToggle={() => setIsMuted(!isMuted)} />
       </motion.section>

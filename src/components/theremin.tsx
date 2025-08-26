@@ -25,6 +25,13 @@ export default function Theremin({ isMuted }: ThereminProps) {
     return min + relative * (max - min);
   };
 
+  const getVolume = (x: number, rect: DOMRect) => {
+    const min = 0;
+    const max = 0.3;
+    const relative = Math.min(Math.max((x - rect.left) / rect.width, 0), 1);
+    return min + relative * (max - min);
+  };
+
   const start = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMuted) return;
     isPressedRef.current = true;
@@ -37,17 +44,21 @@ export default function Theremin({ isMuted }: ThereminProps) {
     const gain = ctx.createGain();
     osc.connect(gain);
     gain.connect(ctx.destination);
-    gain.gain.value = 0.1;
-    osc.frequency.value = getFrequency(e.clientY, e.currentTarget.getBoundingClientRect());
+    const rect = e.currentTarget.getBoundingClientRect();
+    gain.gain.value = getVolume(e.clientX, rect);
+    osc.frequency.value = getFrequency(e.clientY, rect);
     osc.start();
     oscRef.current = osc;
     gainRef.current = gain;
   };
 
   const move = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isPressedRef.current || !oscRef.current || !audioCtxRef.current) return;
-    const freq = getFrequency(e.clientY, e.currentTarget.getBoundingClientRect());
+    if (!isPressedRef.current || !oscRef.current || !audioCtxRef.current || !gainRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const freq = getFrequency(e.clientY, rect);
+    const vol = getVolume(e.clientX, rect);
     oscRef.current.frequency.setValueAtTime(freq, audioCtxRef.current.currentTime);
+    gainRef.current.gain.setValueAtTime(vol, audioCtxRef.current.currentTime);
   };
 
   const stop = () => {
@@ -71,7 +82,7 @@ export default function Theremin({ isMuted }: ThereminProps) {
 
   return (
     <div
-      className="w-full h-48 my-8 border border-gray-300 rounded"
+      className="w-full h-64 my-8 border border-gray-300 rounded"
       onMouseDown={start}
       onMouseMove={move}
       onMouseUp={stop}

@@ -90,7 +90,7 @@ export default function Blog() {
         </div>
         <Theremin isMuted={isMuted} />
         <p className="text-center text-sm text-gray-600 dark:text-gray-400 font-monoreg">
-          Give the theremin a try—vertical moves pitch, horizontal moves volume!
+          this box is a theramin
         </p>
         <MuteButton isMuted={isMuted} onToggle={() => setIsMuted(!isMuted)} />
       </motion.section>

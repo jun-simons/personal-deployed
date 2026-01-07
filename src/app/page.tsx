@@ -151,16 +151,16 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&rsquo;m a senior at RPI studying Computer Science. I currently work at&nbsp;
+            I&rsquo;m a CS masters student at RPI and do sofware/ML engineering at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="underline decoration-gray-500 decoration-2 underline-offset-4 hover:decoration-blue-600 hover:text-blue-600 dark:decoration-gray-300 dark:hover:decoration-white transition-all"
             >
-              MIT Lincoln Laboratory
+              MIT Lincoln Laboratory.
             </a>{' '}
-             doing Software Engineering, Algorithm Design, and AI/ML research.
+            My research projects relate to Federated Learning, Randomized Numerical Linear Algebra, and Computer Vision.
           </p>
           <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
               I previously did a co-op at&nbsp;
@@ -174,7 +174,7 @@ export default function Home() {
             </a>{' '}
             on the Advanced Computing team, doing software and cloud engineering.
           </p>
-          <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 ">
+          <p className="hidden lg:block text-xl text-gray-700 font-mono dark:text-gray-300 ">
               In my free time, I often play music, make art, and dance. I&rsquo;m interested in the 
               art-technology intersection. 
           </p>

@@ -151,7 +151,7 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&rsquo;m a CS masters student at RPI and do sofware/ML engineering at&nbsp;
+            I&rsquo;m a CS masters student at RPI and I do sofware/ML engineering at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 

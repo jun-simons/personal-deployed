@@ -151,7 +151,8 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&rsquo;m a CS masters student at RPI and I do software/ML engineering at&nbsp;
+            I&rsquo;m a CS masters student at RPI focused on machine learning. My research involves Federated Learning, Computer Vision, and ML for Quantum Compilers. 
+            I also work at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
               target="_blank" 
@@ -160,19 +161,18 @@ export default function Home() {
             >
               MIT Lincoln Laboratory.
             </a>{' '}
-            My research projects relate to Federated Learning, Randomized Numerical Linear Algebra, and Computer Vision.
           </p>
           <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-              I previously did a co-op at&nbsp;
+              In addition to ML, im interested in distributed systems and open source software. I previously did a co-op at&nbsp;
             <a 
               href="https://innovativemedicine.jnj.com/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="underline decoration-gray-500 decoration-2 underline-offset-4 hover:decoration-red-600 hover:text-red-600 dark:decoration-gray-300 dark:hover:decoration-white transition-all"
             >
-              Johnson and Johnson
+              J&J
             </a>{' '}
-            on the Advanced Computing team, doing software and cloud engineering.
+            with their advanced computing team.
           </p>
           <p className="hidden lg:block text-xl text-gray-700 font-mono dark:text-gray-300 ">
               In my free time, I often play music, make art, and dance. I&rsquo;m interested in the 

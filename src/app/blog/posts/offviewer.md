@@ -10,5 +10,5 @@ I built this tool to help view OFF files when working on computational geometry 
 
 [<ins>View on GitHub</ins>](https://github.com/jun-simons/OFF-Viewer)
 
-[<ins>Install for VSCode</ins>](https://marketplace.visualstudio.com/items?itemName=JunSimons.off-viewer
+[<ins>Install for VSCode</ins>](https://marketplace.visualstudio.com/items?itemName=JunSimons.off-viewer)
 

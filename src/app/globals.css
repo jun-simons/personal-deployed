@@ -46,3 +46,22 @@ body {
   font-family: 'DotBold';
   src: url('/fonts/OffBitTrial-101.otf') format('opentype');
 }
+
+/* Slim, dim scrollbar for the /art horizontal gallery */
+.art-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.art-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.art-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.art-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+.art-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}

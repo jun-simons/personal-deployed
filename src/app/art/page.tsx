@@ -10,9 +10,7 @@ export default function ArtIndex() {
           art
         </h1>
         <p className="font-monoreg text-base text-neutral-300 leading-relaxed max-w-prose">
-          a small collection of things i&rsquo;ve made &mdash; photographs,
-          drawings, recordings, and assorted experiments at the intersection of
-          art and technology.
+          a collection of things ive made 
         </p>
       </header>
 

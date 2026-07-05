@@ -78,6 +78,32 @@ export const pieces: Piece[] = [
       { type: 'image', src: '/globe.svg', alt: 'globe', caption: 'globe' },
     ],
   },
+  {
+    slug: 'catskill',
+    title: 'catskill sunrises',
+    year: '2026',
+    description: 'Digital Photography, Fujifilm XT-50',
+    cover: '/art/catskill/catskill1.jpg',
+    media: [
+      { type: 'image', src: '/art/catskill/catskill1.jpg', alt: 'low tide', caption: 'low tide' },
+      { type: 'image', src: '/art/catskill/catskill2.jpg', alt: 'dive', caption: 'dive' },
+      { type: 'image', src: '/art/catskill/catskill3.jpg', alt: 'weeds', caption: 'weeds' },
+    ],
+  },
+  {
+    slug: 'maine',
+    title: 'maine',
+    year: '2022',
+    description: 'Digital Photography, Nikon D850',
+    cover: '/art/LowTide.jpg',
+    media: [
+      { type: 'image', src: '/art/LowTide.jpg', alt: 'low tide', caption: 'low tide' },
+      { type: 'image', src: '/art/Dive.jpg', alt: 'dive', caption: 'dive' },
+      { type: 'image', src: '/art/Weeds.jpg', alt: 'weeds', caption: 'weeds' },
+    ],
+  },
+  
+
 ]
 
 export function getPiece(slug: string): Piece | undefined {

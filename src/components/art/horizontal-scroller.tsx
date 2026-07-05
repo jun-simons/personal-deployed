@@ -65,6 +65,7 @@ export default function HorizontalScroller({ children }: HorizontalScrollerProps
         snap-x snap-mandatory
         scroll-smooth
         art-scrollbar
+        art-fade-edges
       "
     >
       {children}

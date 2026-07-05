@@ -19,10 +19,10 @@ export default async function ArtPiece({
   if (!piece) notFound()
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col max-w-4xl mx-auto w-full">
       {/* Header strip */}
-      <header className="px-6 sm:px-12 pb-4 flex items-baseline justify-between gap-4 font-monoreg">
-        <div className="flex items-baseline gap-3 min-w-0">
+      <header className="px-6 sm:px-8 pb-4 flex items-baseline justify-between gap-4 font-monoreg">
+        <div className="flex items-baseline gap-6 sm:gap-10 min-w-0">
           <Link
             href="/art"
             className="text-sm text-neutral-500 hover:text-rose-400 transition-colors shrink-0"
@@ -41,7 +41,7 @@ export default async function ArtPiece({
       </header>
 
       {piece.description && (
-        <p className="px-6 sm:px-12 pb-4 font-monoreg text-sm text-neutral-400 max-w-prose">
+        <p className="px-6 sm:px-8 pb-4 font-monoreg text-sm text-neutral-400 max-w-prose">
           {piece.description}
         </p>
       )}

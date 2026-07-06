@@ -1,12 +1,23 @@
 // src/app/art/pieces.ts
 //
-// Add a new piece by appending an entry to the `pieces` array below.
-// Media files live in /public/art/ (paths are referenced as "/art/...").
+// Media is hosted on Cloudflare R2 (bucket: js-photos), served via the
+// public r2.dev subdomain. The base URL can be overridden via the
+// NEXT_PUBLIC_ART_BASE_URL env var — useful when swapping to a custom
+// domain later without touching any entries below.
 //
 // Media types:
 //   { type: 'image', src, alt?, caption? }
 //   { type: 'video', src, poster?, caption?, loop?, muted? }
 //   { type: 'audio', src, caption?, cover? }
+
+const R2_BASE =
+  process.env.NEXT_PUBLIC_ART_BASE_URL ??
+  'https://pub-bb04075bc6114410b857851b2068ad83.r2.dev'
+
+/** Build a full media URL from a bucket key like `maine/Dive.jpg`. */
+export function art(key: string): string {
+  return `${R2_BASE}/${key.replace(/^\//, '')}`
+}
 
 export type MediaItem =
   | {
@@ -41,41 +52,29 @@ export type Piece = {
 
 export const pieces: Piece[] = [
   {
-    slug: 'studies',
-    title: 'studies',
-    year: '2026',
-    description:
-      'A placeholder piece mixing image, video, and audio so the layout can be verified end-to-end.',
-    cover: '/owl.png',
+    slug: 'catskills',
+    title: 'catskills',
+    year: '2025',
+    description: 'photographs from the catskills.',
+    cover: art('catskills/stillness.jpg'),
     media: [
-      { type: 'image', src: '/owl.png', alt: 'owl', caption: 'owl, ink on paper' },
-      { type: 'image', src: '/globe.svg', alt: 'globe', caption: 'globe study' },
-      {
-        type: 'video',
-        src: '/art/sample.mp4',
-        poster: '/owl.png',
-        caption: 'motion sketch (placeholder — drop a real .mp4 at public/art/sample.mp4)',
-        loop: true,
-        muted: true,
-      },
-      {
-        type: 'audio',
-        src: '/art/sample.mp3',
-        cover: '/owl.png',
-        caption: 'field recording (placeholder — drop a real .mp3 at public/art/sample.mp3)',
-      },
+      { type: 'image', src: art('catskills/stillness.jpg'), alt: 'stillness' },
+      { type: 'image', src: art('catskills/DSCF3168.jpg'), alt: '' },
+      { type: 'image', src: art('catskills/DSCF3177.jpg'), alt: '' },
+      { type: 'image', src: art('catskills/DSCF3252.jpg'), alt: '' },
+      { type: 'image', src: art('catskills/DSCF3321.jpg'), alt: '' },
     ],
   },
   {
-    slug: 'field-notes',
-    title: 'field notes',
+    slug: 'maine',
+    title: 'maine',
     year: '2025',
-    description: 'Image-only placeholder piece.',
-    cover: '/window.svg',
+    description: 'photographs from a trip to maine.',
+    cover: art('maine/Dive.jpg'),
     media: [
-      { type: 'image', src: '/window.svg', alt: 'window', caption: 'window' },
-      { type: 'image', src: '/file.svg', alt: 'file', caption: 'file' },
-      { type: 'image', src: '/globe.svg', alt: 'globe', caption: 'globe' },
+      { type: 'image', src: art('maine/Dive.jpg'), alt: 'dive' },
+      { type: 'image', src: art('maine/LowTide.jpg'), alt: 'low tide' },
+      { type: 'image', src: art('maine/Weeds.jpg'), alt: 'weeds' },
     ],
   },
 ]

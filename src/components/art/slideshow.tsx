@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
 import type { MediaItem } from '@/app/art/pieces'
 
 // Encoded inline SVG cursors — white arrow with a subtle black outline so
@@ -97,16 +98,22 @@ export default function Slideshow({ media }: SlideshowProps) {
   )
 }
 
+const IMAGE_SIZES = '(min-width: 1152px) 1024px, 90vw'
+
 function MediaContent({ item }: { item: MediaItem }) {
   if (item.type === 'image') {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={item.src}
-        alt={item.alt ?? ''}
-        className="max-h-full max-w-full object-contain select-none"
-        draggable={false}
-      />
+      <div className="relative w-full h-full">
+        <Image
+          src={item.src}
+          alt={item.alt ?? ''}
+          fill
+          sizes={IMAGE_SIZES}
+          className="object-contain select-none"
+          draggable={false}
+          priority
+        />
+      </div>
     )
   }
 
@@ -138,13 +145,16 @@ function MediaContent({ item }: { item: MediaItem }) {
       className="flex flex-col items-center gap-6 max-h-full"
     >
       {item.cover && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={item.cover}
-          alt=""
-          className="max-h-[60vh] max-w-full object-contain opacity-90"
-          draggable={false}
-        />
+        <div className="relative w-full h-[60vh] max-w-full">
+          <Image
+            src={item.cover}
+            alt=""
+            fill
+            sizes={IMAGE_SIZES}
+            className="object-contain opacity-90"
+            draggable={false}
+          />
+        </div>
       )}
       <audio src={item.src} controls className="w-80 max-w-full" />
     </div>

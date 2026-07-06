@@ -18,7 +18,7 @@ export default async function ArtPiece({
   if (!piece) notFound()
 
   return (
-    <div className="h-full flex flex-col max-w-4xl mx-auto w-full">
+    <div className="h-full flex flex-col max-w-6xl mx-auto w-full pt-4 sm:pt-6">
       {/* Header strip */}
       <header className="px-6 sm:px-8 pb-4 flex items-baseline justify-between gap-4 font-monoreg">
         <div className="flex items-baseline gap-6 sm:gap-10 min-w-0">

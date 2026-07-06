@@ -2,8 +2,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { pieces, getPiece } from '../pieces'
-import MediaItem from '@/components/art/media-item'
-import HorizontalScroller from '@/components/art/horizontal-scroller'
+import Slideshow from '@/components/art/slideshow'
 
 export function generateStaticParams() {
   return pieces.map((p) => ({ slug: p.slug }))
@@ -46,12 +45,8 @@ export default async function ArtPiece({
         </p>
       )}
 
-      {/* Horizontal snap-scroll gallery */}
-      <HorizontalScroller>
-        {piece.media.map((item, i) => (
-          <MediaItem key={i} item={item} />
-        ))}
-      </HorizontalScroller>
+      {/* Slideshow */}
+      <Slideshow media={piece.media} />
     </div>
   )
 }

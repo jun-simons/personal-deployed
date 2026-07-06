@@ -85,9 +85,10 @@ export const pieces: Piece[] = [
     description: 'Digital Photography, Fujifilm XT-50',
     cover: '/art/catskill/catskill1.jpg',
     media: [
-      { type: 'image', src: '/art/catskill/catskill1.jpg', alt: 'low tide', caption: 'low tide' },
-      { type: 'image', src: '/art/catskill/catskill2.jpg', alt: 'dive', caption: 'dive' },
-      { type: 'image', src: '/art/catskill/catskill3.jpg', alt: 'weeds', caption: 'weeds' },
+      { type: 'image', src: '/art/catskill/catskill1.jpg', alt: 'low tide', caption: 'winter \'25, hunter mountain' },
+      { type: 'image', src: '/art/catskill/catskill2.jpg', alt: 'dive', caption: 'winter \'25, hunter mountain' },
+      { type: 'image', src: '/art/catskill/catskill3.jpg', alt: 'weeds', caption: 'spring \'26, mt tremper' },
+      { type: 'image', src: '/art/catskill/stillness.jpg', alt: 'weeds', caption: 'stillness in the hut' },
     ],
   },
   {

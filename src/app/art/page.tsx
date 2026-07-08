@@ -7,7 +7,7 @@ export default function ArtIndex() {
     <main className="max-w-3xl mx-auto px-6 sm:px-8 py-12">
       <header className="mb-16">
         <h1 className="font-display text-5xl sm:text-6xl tracking-widest mb-6">
-          art
+          art / photography
         </h1>
         <p className="font-monoreg text-base text-neutral-300 leading-relaxed max-w-prose">
           a collection of things ive made 

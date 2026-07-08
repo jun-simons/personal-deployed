@@ -10,7 +10,7 @@ export default async function Blog() {
     <main className="max-w-3xl mx-auto px-6 sm:px-8 py-12">
       <header className="mb-16">
         <h1 className="font-display text-5xl sm:text-6xl tracking-widest mb-6">
-          posts + projects
+          posts / projects
         </h1>
         <p className="font-monoreg text-base text-neutral-700 leading-relaxed max-w-prose">
           things i&rsquo;ve built and things i&rsquo;ve written.

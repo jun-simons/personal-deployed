@@ -97,6 +97,15 @@ const Navbar = ({ visible }: NavbarProps) => {
             projects
           </Link>
           <Link
+            href="/art"
+            className="
+              hover:underline
+              hover:decoration-rose-500 hover:text-rose-500
+            "
+          >
+            art
+          </Link>
+          <Link
             href="/contact"
             className="
               hover:underline

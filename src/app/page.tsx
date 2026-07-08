@@ -151,7 +151,7 @@ export default function Home() {
       >
         <div className="w-4/5 max-w-[800px] text-center">
           <p className="text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
-            I&rsquo;m a CS masters student at RPI focused on machine learning. My research involves Federated Learning, Computer Vision, and ML for Quantum Compilers. 
+            I&rsquo;m a CS masters student at RPI and 
             I also work at&nbsp;
             <a 
               href="https://www.ll.mit.edu/" 
@@ -159,8 +159,10 @@ export default function Home() {
               rel="noopener noreferrer" 
               className="underline decoration-gray-500 decoration-2 underline-offset-4 hover:decoration-blue-600 hover:text-blue-600 dark:decoration-gray-300 dark:hover:decoration-white transition-all"
             >
-              MIT Lincoln Laboratory.
+              MIT Lincoln Laboratory.            
             </a>{' '}
+            Im currently building foundation models for RF signals and using ML for quantum compilers.
+
           </p>
           <p className="hidden sm:block text-xl text-gray-700 font-mono dark:text-gray-300 mb-6">
               In addition to ML, im interested in distributed systems and open source software. I previously did a co-op at&nbsp;

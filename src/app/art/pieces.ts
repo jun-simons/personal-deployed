@@ -48,10 +48,13 @@ export type MediaItem =
       cover?: string
     }
 
+export type PieceTag = 'photography' | 'generative'
+
 export type Piece = {
   slug: string
   title: string
   year?: string
+  tag?: PieceTag
   description?: string
   cover?: string // reserved for future hover-preview on the index
   media: MediaItem[]
@@ -62,6 +65,7 @@ export const pieces: Piece[] = [
     slug: 'catskills',
     title: 'catskills',
     year: '2025',
+    tag: 'photography',
     description: 'photographs from the catskills.',
     cover: art('catskills/stillness.jpg'),
     media: [
@@ -76,6 +80,7 @@ export const pieces: Piece[] = [
     slug: 'maine',
     title: 'maine',
     year: '2025',
+    tag: 'photography',
     description: 'photographs from a trip to maine.',
     cover: art('maine/Dive.jpg'),
     media: [
@@ -88,6 +93,7 @@ export const pieces: Piece[] = [
     slug: 'transport-1',
     title: 'Transport 1',
     year: '2023',
+    tag: 'generative',
     media: [
       {
         type: 'video',

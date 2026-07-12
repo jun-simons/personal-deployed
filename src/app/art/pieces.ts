@@ -72,6 +72,19 @@ export const pieces: Piece[] = [
       { type: 'image', src: art('catskills/DSCF3177.jpg'), alt: 'view from mt tremper', caption: 'from tremper'},
     ],
   },
+ {
+    slug: 'transport-1',
+    title: 'transport 1',
+    year: '2023',
+    media: [
+      {
+        type: 'video',
+        src: art('generative/Transport 1.mp4'),
+        loop: true,
+        muted: false,
+      },
+    ],
+  },
   {
     slug: 'maine',
     title: 'maine',
@@ -82,19 +95,6 @@ export const pieces: Piece[] = [
       { type: 'image', src: art('maine/LowTide.jpg'), alt: 'low tide', caption: 'low tide' },
       { type: 'image', src: art('maine/Dive.jpg'), alt: 'dive', caption: 'dive' },
       { type: 'image', src: art('maine/Weeds.jpg'), alt: 'weeds', caption: 'weeds' },
-    ],
-  },
-  {
-    slug: 'transport-1',
-    title: 'Transport 1',
-    year: '2023',
-    media: [
-      {
-        type: 'video',
-        src: art('generative/Transport 1.mp4'),
-        loop: true,
-        muted: true,
-      },
     ],
   },
 ]

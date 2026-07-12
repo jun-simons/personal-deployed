@@ -1,13 +1,32 @@
 'use client'
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface NavbarProps {
   visible: boolean;
 }
 
+const links = [
+  { href: '/blog', label: 'projects', hoverColor: 'green-700' },
+  { href: '/art', label: 'art', hoverColor: 'rose-500' },
+  { href: '/contact', label: 'contact', hoverColor: 'orange-500' },
+] as const;
+
+// hover colors need to appear verbatim in the source for tailwind's JIT to pick
+// them up — kept as static classes below rather than templated from the array.
+
 const Navbar = ({ visible }: NavbarProps) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // close the mobile menu on any route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   // Framer Motion animation variants
   const titleVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -32,9 +51,22 @@ const Navbar = ({ visible }: NavbarProps) => {
         type: "spring",
         stiffness: 500,
         damping: 20,
-        duration: 0.2, // Short duration for an immediate effect
+        duration: 0.2,
       },
     },
+  };
+
+  const linkClassName = (label: string) => {
+    switch (label) {
+      case 'projects':
+        return 'hover:underline hover:decoration-green-700 hover:text-green-700';
+      case 'art':
+        return 'hover:underline hover:decoration-rose-500 hover:text-rose-500';
+      case 'contact':
+        return 'hover:underline hover:decoration-orange-500 hover:text-orange-500';
+      default:
+        return '';
+    }
   };
 
   return (
@@ -46,7 +78,7 @@ const Navbar = ({ visible }: NavbarProps) => {
         fixed top-0 left-0 w-full
         font-mono
         bg-background
-        p-2 sm:p-4        /* ↓ smaller padding on mobile */
+        p-2 sm:p-4
         z-30
       "
     >
@@ -54,7 +86,7 @@ const Navbar = ({ visible }: NavbarProps) => {
         className="
           max-w-3xl mx-auto
           flex justify-between items-center
-          px-2 sm:px-4     /* ↓ smaller horizontal gutters on mobile */
+          px-2 sm:px-4
           z-40
         "
       >
@@ -62,9 +94,9 @@ const Navbar = ({ visible }: NavbarProps) => {
         <Link href="/" className="flex items-center no-underline">
           <motion.div
             className="
-              flex items-center 
-              space-x-0.5 sm:space-x-1   /* ↓ tighten up spacing on mobile */
-              text-md sm:text-xl         /* ↓ smaller title on mobile */
+              flex items-center
+              space-x-0.5 sm:space-x-1
+              text-md sm:text-xl
             "
             variants={titleVariants}
             initial="hidden"
@@ -73,49 +105,81 @@ const Navbar = ({ visible }: NavbarProps) => {
           >
             {[...'junsimons.com'].map((char, i) => (
               <motion.span key={i} variants={letterVariants}>
-                {char === ' ' ? '\u00A0' : char}
+                {char === ' ' ? ' ' : char}
               </motion.span>
             ))}
           </motion.div>
         </Link>
 
-        {/* Links */}
+        {/* Desktop links */}
         <div
           className="
-            flex items-center
-            space-x-3 sm:space-x-6     /* ↓ smaller gap between links on mobile */
-            text-md sm:text-xl         /* ↓ smaller link text on mobile */
+            hidden sm:flex items-center
+            space-x-6
+            text-xl
           "
         >
-          <Link
-            href="/blog"
-            className="
-              hover:underline
-              hover:decoration-green-700 hover:text-green-700
-            "
-          >
-            projects
-          </Link>
-          <Link
-            href="/art"
-            className="
-              hover:underline
-              hover:decoration-rose-500 hover:text-rose-500
-            "
-          >
-            art
-          </Link>
-          <Link
-            href="/contact"
-            className="
-              hover:underline
-              hover:decoration-orange-500 hover:text-orange-500
-            "
-          >
-            contact
-          </Link>
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} className={linkClassName(l.label)}>
+              {l.label}
+            </Link>
+          ))}
         </div>
+
+        {/* Mobile menu toggle */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          className="sm:hidden relative w-6 h-6 flex items-center justify-center"
+        >
+          <span className="sr-only">Menu</span>
+          <span
+            aria-hidden
+            className={`absolute block w-5 h-px bg-current transition-transform duration-200 ${
+              menuOpen ? 'rotate-45' : '-translate-y-1.5'
+            }`}
+          />
+          <span
+            aria-hidden
+            className={`absolute block w-5 h-px bg-current transition-opacity duration-200 ${
+              menuOpen ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          <span
+            aria-hidden
+            className={`absolute block w-5 h-px bg-current transition-transform duration-200 ${
+              menuOpen ? '-rotate-45' : 'translate-y-1.5'
+            }`}
+          />
+        </button>
       </div>
+
+      {/* Mobile links panel */}
+      <AnimatePresence initial={false}>
+        {menuOpen && (
+          <motion.div
+            key="mobile-links"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="sm:hidden max-w-3xl mx-auto px-4 pt-2 pb-1 flex flex-col items-end gap-3 text-lg"
+          >
+            {links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className={linkClassName(l.label)}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

@@ -80,7 +80,7 @@ export const pieces: Piece[] = [
     slug: 'transport-1',
     title: 'transport 1',
     year: '2023',
-    description: 'Generative biological network built for live exhibition in C++ & openFrameworks. Audio from SuperCollider',
+    description: 'Generative biological network built for live exhibition in C++ & openFrameworks. I made the audio in SuperCollider',
     tag: 'generative',
     media: [
       {

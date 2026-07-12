@@ -32,6 +32,8 @@ export default function Slideshow({ media }: SlideshowProps) {
   const [side, setSide] = useState<'left' | 'right'>('right')
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const single = media.length <= 1
+
   const goTo = useCallback(
     (delta: number) => {
       setIndex((i) => (i + delta + media.length) % media.length)
@@ -41,13 +43,14 @@ export default function Slideshow({ media }: SlideshowProps) {
 
   // Keyboard arrows
   useEffect(() => {
+    if (single) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') goTo(1)
       else if (e.key === 'ArrowLeft') goTo(-1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [goTo])
+  }, [goTo, single])
 
   const onMouseMove = (e: React.MouseEvent) => {
     const el = containerRef.current
@@ -68,10 +71,16 @@ export default function Slideshow({ media }: SlideshowProps) {
     <div className="flex-1 min-h-0 flex flex-col">
       <div
         ref={containerRef}
-        onMouseMove={onMouseMove}
-        onClick={onClick}
+        onMouseMove={single ? undefined : onMouseMove}
+        onClick={single ? undefined : onClick}
         className="relative flex-1 min-h-0 select-none"
-        style={{ cursor: side === 'left' ? LEFT_CURSOR : RIGHT_CURSOR }}
+        style={{
+          cursor: single
+            ? 'auto'
+            : side === 'left'
+              ? LEFT_CURSOR
+              : RIGHT_CURSOR,
+        }}
       >
         <AnimatePresence initial={false}>
           <motion.div
@@ -90,9 +99,11 @@ export default function Slideshow({ media }: SlideshowProps) {
       {/* Caption + counter — outside the click area so cursor is normal here */}
       <div className="pt-4 pb-2 px-6 sm:px-8 flex items-center justify-between gap-4 font-monoreg text-sm text-neutral-400">
         <span className="truncate">{current.caption ?? ''}</span>
-        <span className="tabular-nums text-neutral-500 shrink-0">
-          {index + 1} / {media.length}
-        </span>
+        {!single && (
+          <span className="tabular-nums text-neutral-500 shrink-0">
+            {index + 1} / {media.length}
+          </span>
+        )}
       </div>
     </div>
   )

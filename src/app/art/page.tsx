@@ -1,6 +1,7 @@
 // src/app/art/page.tsx
 import Link from 'next/link'
 import { pieces } from './pieces'
+import Tag from '@/components/tag'
 
 export default function ArtIndex() {
   return (
@@ -28,14 +29,17 @@ export default function ArtIndex() {
                 transition-colors
               "
             >
-              <span className="text-xl text-neutral-100 group-hover:text-rose-400 transition-colors">
+              <span className="text-xl text-neutral-100 group-hover:text-rose-400 transition-colors truncate">
                 {p.title}
               </span>
-              {p.year && (
-                <span className="text-sm text-neutral-500 group-hover:text-rose-400/70 transition-colors tabular-nums">
-                  {p.year}
-                </span>
-              )}
+              <span className="flex items-baseline gap-3 shrink-0">
+                {p.year && (
+                  <span className="text-sm text-neutral-500 group-hover:text-rose-400/70 transition-colors tabular-nums">
+                    {p.year}
+                  </span>
+                )}
+                {p.tag && <Tag type={p.tag} />}
+              </span>
             </Link>
           </li>
         ))}

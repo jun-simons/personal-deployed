@@ -48,10 +48,13 @@ export type MediaItem =
       cover?: string
     }
 
+export type PieceTag = 'photography' | 'generative'
+
 export type Piece = {
   slug: string
   title: string
   year?: string
+  tag?: PieceTag
   description?: string
   cover?: string // reserved for future hover-preview on the index
   media: MediaItem[]
@@ -62,6 +65,7 @@ export const pieces: Piece[] = [
     slug: 'catskills',
     title: 'catskills at sunrise',
     year: '2026',
+    tag: 'photography',
     description: 'digital photographs',
     cover: art('catskills/stillness.jpg'),
     media: [
@@ -76,6 +80,8 @@ export const pieces: Piece[] = [
     slug: 'transport-1',
     title: 'transport 1',
     year: '2023',
+    description: 'Generative biological network built for live exhibition in C++ & openFrameworks. Audio from SuperCollider',
+    tag: 'generative',
     media: [
       {
         type: 'video',
@@ -89,6 +95,7 @@ export const pieces: Piece[] = [
     slug: 'maine',
     title: 'maine',
     year: '2022',
+    tag: 'photography',
     description: 'digital photographs',
     cover: art('maine/Dive.jpg'),
     media: [

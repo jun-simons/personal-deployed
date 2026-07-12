@@ -100,24 +100,27 @@ export default function Home() {
         animate(scope.current, { y: -200, scale: 1, opacity: 0 }, { duration: 0.5, ease: 'easeOut' })
       }
     }
-  
+
     const onScroll = () => {
       if (window.scrollY > 10) trigger()
     }
-  
-    // listen for any scrolling
+
+    // Any touch on the page reveals the about section on mobile — body has
+    // overflow:hidden so real scroll/touchmove never fire on this page.
+    const onTouchStart = () => trigger()
+
     window.addEventListener('scroll', onScroll, { passive: true })
-  
-    // optional: could add touch drags
     window.addEventListener('touchmove', onScroll, { passive: true })
-  
-    // fallback: after 6s, if nothing happened, auto-fire
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+
+    // fallback: after 5s, if nothing happened, auto-fire
     const timer = setTimeout(trigger, 5000)
-  
+
     return () => {
       clearTimeout(timer)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('touchmove', onScroll)
+      window.removeEventListener('touchstart', onTouchStart)
     }
   }, [hasScrolled, animate, scope])
 

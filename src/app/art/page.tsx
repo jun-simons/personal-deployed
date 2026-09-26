@@ -1,49 +1,28 @@
 // src/app/art/page.tsx
-import Link from 'next/link'
+import type { Metadata } from 'next'
 import { pieces } from './pieces'
+import IndexList from '@/components/index-list'
+import PageHeader from '@/components/page-header'
 import Tag from '@/components/tag'
+
+export const metadata: Metadata = {
+  title: 'art / photography',
+}
 
 export default function ArtIndex() {
   return (
-    <main className="max-w-3xl mx-auto px-6 sm:px-8 py-12">
-      <header className="mb-16">
-        <h1 className="font-display text-5xl sm:text-6xl tracking-widest mb-6">
-          art / photography
-        </h1>
-        <p className="font-monoreg text-base text-neutral-300 leading-relaxed max-w-prose">
-          a collection of things ive made 
-        </p>
-      </header>
+    <main className="mx-auto max-w-3xl px-6 pb-28 pt-28 sm:px-8 sm:pt-36">
+      <PageHeader title="art / photography">a collection of things ive made</PageHeader>
 
-      <ul className="space-y-5">
-        {pieces.map((p) => (
-          <li key={p.slug}>
-            <Link
-              href={`/art/${p.slug}`}
-              className="
-                group
-                flex items-baseline justify-between gap-4
-                font-monoreg
-                py-1
-                border-b border-neutral-800 hover:border-rose-500/60
-                transition-colors
-              "
-            >
-              <span className="text-xl text-neutral-100 group-hover:text-rose-400 transition-colors truncate">
-                {p.title}
-              </span>
-              <span className="flex items-baseline gap-3 shrink-0">
-                {p.year && (
-                  <span className="text-sm text-neutral-500 group-hover:text-rose-400/70 transition-colors tabular-nums">
-                    {p.year}
-                  </span>
-                )}
-                {p.tag && <Tag type={p.tag} />}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <IndexList
+        accent="rose"
+        items={pieces.map((p) => ({
+          href: `/art/${p.slug}`,
+          title: p.title,
+          date: p.year,
+          tag: p.tag && <Tag type={p.tag} />,
+        }))}
+      />
     </main>
   )
 }

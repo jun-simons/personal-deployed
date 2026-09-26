@@ -2,48 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Theme tokens. The site is light by default; the /art section switches the
+   whole document to the dark "room" via html[data-theme="dark"], which is set
+   before first paint by an inline script in the root layout and kept in sync
+   on client navigation by <ThemeSync />.
+   --------------------------------------------------------------------------- */
 :root {
-  --background: #E1DFDD;
+  --background: #e1dfdd;
   --foreground: #171717;
+  --muted: #5f5c59;
+  --faint: #8a8683;
+  --rule: rgb(23 23 23 / 0.16);
+
+  /* home instrument strings */
+  --grid-line: #cfccc8;
+  --grid-accent: #8fa38b;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+html[data-theme="dark"] {
+  --background: #0d0d0f;
+  --foreground: #ededed;
+  --muted: #a3a3a3;
+  --faint: #6b6b6b;
+  --rule: rgb(237 237 237 / 0.13);
+
+  --grid-line: #232326;
+  --grid-accent: #f43f5e;
+
+  color-scheme: dark;
+}
+
+html {
+  background: var(--background);
+}
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 450ms ease, color 450ms ease;
 }
 
-
-@font-face {
-  font-family: 'InputMonoLight';
-  src: url('/fonts/InputMonoLight.ttf') format('truetype');
-  font-weight: 400; /* Normal weight */
-  font-style: normal; /* Regular style */
-}
-@font-face {
-  font-family: 'InputMonoRegular';
-  src: url('/fonts/InputMonoRegular.ttf') format('truetype');
-  font-weight: 400; /* Normal weight */
-  font-style: normal; /* Regular style */
-}
-@font-face {
-  font-family: 'Kelsi';
-  src: url('/fonts/Kelsi-Regular.otf') format('opentype');
-}
-@font-face {
-  font-family: 'Acma';
-  src: url('/fonts/PPAcma-Semibold.otf') format('opentype');
-}
-@font-face {
-  font-family: 'DotBold';
-  src: url('/fonts/OffBitTrial-101.otf') format('opentype');
+::selection {
+  background: rgb(143 163 139 / 0.4);
 }
 
+html[data-theme="dark"] ::selection {
+  background: rgb(244 63 94 / 0.35);
+}
+
+:focus-visible {
+  outline: 1.5px dashed currentColor;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

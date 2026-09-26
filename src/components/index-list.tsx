@@ -26,6 +26,8 @@ export type IndexItem = {
   title: string
   date?: string
   tag?: ReactNode
+  /** image shown next to the cursor on hover (inside <HoverPreview>) */
+  preview?: string
 }
 
 export default function IndexList({ items, accent }: { items: IndexItem[]; accent: Accent }) {
@@ -36,6 +38,7 @@ export default function IndexList({ items, accent }: { items: IndexItem[]; accen
         <li key={item.href}>
           <Link
             href={item.href}
+            data-preview={item.preview}
             className={`group flex flex-col gap-1.5 border-b border-rule py-4 transition-colors sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 ${a.row}`}
           >
             <span className={`font-monoreg text-lg transition-colors sm:text-xl ${a.title}`}>

@@ -9,7 +9,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { frequencyFor } from '@/components/instruments/scales'
 import { useIntro } from '@/components/providers/intro'
+import { useSound } from '@/components/providers/sound'
 
 // Each section keeps its own accent color. Class names are written out in full
 // so Tailwind picks them up.
@@ -45,12 +47,18 @@ const titleVariants = {
 const letterVariants = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 26 } },
-  hover: { y: -5, transition: { type: 'spring', stiffness: 500, damping: 20 } },
 }
+
+const letterHover = { y: -5, transition: { type: 'spring', stiffness: 500, damping: 20 } }
+
+const TITLE = 'junsimons.com'
+// the letters walk up the current scale, starting a few steps below the tonic
+const TITLE_FIRST_STEP = -4
 
 export default function Navbar() {
   const pathname = usePathname()
   const { introDone } = useIntro()
+  const { playNote, settings } = useSound()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const onHome = pathname === '/'
@@ -93,10 +101,18 @@ export default function Navbar() {
             variants={titleVariants}
             initial="hidden"
             animate={visible ? 'visible' : 'hidden'}
-            whileHover="hover"
           >
-            {[...'junsimons.com'].map((char, i) => (
-              <motion.span key={i} variants={letterVariants} className="inline-block">
+            {/* each letter is a key: sweep across them to play a little run */}
+            {[...TITLE].map((char, i) => (
+              <motion.span
+                key={i}
+                variants={letterVariants}
+                whileHover={letterHover}
+                onHoverStart={() =>
+                  playNote(frequencyFor(settings.scale, TITLE_FIRST_STEP + i), { strength: 0.45 })
+                }
+                className="inline-block"
+              >
                 {char}
               </motion.span>
             ))}

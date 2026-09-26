@@ -56,7 +56,7 @@ export type Piece = {
   year?: string
   tag?: PieceTag
   description?: string
-  cover?: string // reserved for future hover-preview on the index
+  cover?: string // shown beside the cursor when hovering this piece on /art
   media: MediaItem[]
 }
 

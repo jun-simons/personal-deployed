@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { displayFont, monoLight, monoRegular } from './fonts'
+import Konami from '@/components/easter-eggs/konami'
+import IdleOwl from '@/components/easter-eggs/owl'
 import Navbar from '@/components/navbar'
 import ThemeSync from '@/components/theme-sync'
 import { IntroProvider } from '@/components/providers/intro'
@@ -50,6 +52,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <ThemeSync />
             <Navbar />
             {children}
+            <Konami />
+            <IdleOwl />
           </IntroProvider>
         </SoundProvider>
       </body>

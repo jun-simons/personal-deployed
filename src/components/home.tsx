@@ -10,9 +10,8 @@
 import { AnimatePresence, motion, type Variants } from 'framer-motion'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import GridInstrument from '@/components/instruments/grid-instrument'
+import GridInstrument, { type LoopControls, type LoopStatus } from '@/components/instruments/grid-instrument'
 import SoundControls from '@/components/instruments/sound-controls'
-import type { ScaleName } from '@/components/instruments/scales'
 import { useIntro } from '@/components/providers/intro'
 
 const NAME = 'Jun Simons'
@@ -59,7 +58,8 @@ export default function Home() {
   const [showHint, setShowHint] = useState(false)
   const [hint, setHint] = useState('scroll')
   const [rippleKey, setRippleKey] = useState(0)
-  const [scale, setScale] = useState<ScaleName>('pentatonic')
+  const [loop, setLoop] = useState<LoopStatus>({ mode: 'idle', length: 0 })
+  const loopControls = useRef<LoopControls | null>(null)
   const revealedRef = useRef(introDone)
 
   const reveal = useCallback(() => {
@@ -130,7 +130,13 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <GridInstrument scale={scale} drawIn={!skippedIntro} rippleKey={rippleKey} />
+      <GridInstrument
+        drawIn={!skippedIntro}
+        rippleKey={rippleKey}
+        ready={revealed}
+        loopControlsRef={loopControls}
+        onLoopChange={setLoop}
+      />
 
       <h1 className="sr-only">{NAME}</h1>
 
@@ -226,7 +232,7 @@ export default function Home() {
         </motion.div>
       </motion.main>
 
-      <SoundControls visible={revealed} scale={scale} onScaleChange={setScale} />
+      <SoundControls visible={revealed} loop={loop} loopControls={loopControls} />
     </div>
   )
 }

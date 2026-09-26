@@ -1,187 +1,204 @@
+// src/components/navbar.tsx
+//
+// Rendered once in the root layout, so it stays put across navigation instead
+// of re-animating on every page. On the home page it waits for the intro to
+// finish before dropping in.
 'use client'
 
-import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from 'framer-motion'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { frequencyFor } from '@/components/instruments/scales'
+import { useIntro } from '@/components/providers/intro'
+import { useSound } from '@/components/providers/sound'
 
-interface NavbarProps {
-  visible: boolean;
+// Each section keeps its own accent color. Class names are written out in full
+// so Tailwind picks them up.
+const links = [
+  {
+    href: '/blog',
+    label: 'projects',
+    hover: 'hover:text-green-700 hover:decoration-green-700',
+    active: 'text-green-700 decoration-green-700',
+  },
+  {
+    href: '/art',
+    label: 'art',
+    hover: 'hover:text-rose-500 hover:decoration-rose-500',
+    active: 'text-rose-500 decoration-rose-500',
+  },
+  {
+    href: '/contact',
+    label: 'contact',
+    hover: 'hover:text-orange-500 hover:decoration-orange-500',
+    active: 'text-orange-500 decoration-orange-500',
+  },
+] as const
+
+const titleVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 },
+  },
 }
 
-const links = [
-  { href: '/blog', label: 'projects', hoverColor: 'green-700' },
-  { href: '/art', label: 'art', hoverColor: 'rose-500' },
-  { href: '/contact', label: 'contact', hoverColor: 'orange-500' },
-] as const;
+const letterVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 26 } },
+}
 
-// hover colors need to appear verbatim in the source for tailwind's JIT to pick
-// them up — kept as static classes below rather than templated from the array.
+const letterHover = { y: -5, transition: { type: 'spring', stiffness: 500, damping: 20 } }
 
-const Navbar = ({ visible }: NavbarProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
+const TITLE = 'junsimons.com'
+// the letters walk up the current scale, starting a few steps below the tonic
+const TITLE_FIRST_STEP = -4
 
-  // close the mobile menu on any route change
+export default function Navbar() {
+  const pathname = usePathname()
+  const { introDone } = useIntro()
+  const { playNote, settings } = useSound()
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const onHome = pathname === '/'
+  const visible = !onHome || introDone
+
   useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
+    setMenuOpen(false)
+  }, [pathname])
 
-  // Framer Motion animation variants
-  const titleVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 500,
-        damping: 25,
-        staggerChildren: 0.05,
-      },
-    },
-  };
-
-  const letterVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-    hover: {
-      y: -5,
-      transition: {
-        type: "spring",
-        stiffness: 500,
-        damping: 20,
-        duration: 0.2,
-      },
-    },
-  };
-
-  const linkClassName = (label: string) => {
-    switch (label) {
-      case 'projects':
-        return 'hover:underline hover:decoration-green-700 hover:text-green-700';
-      case 'art':
-        return 'hover:underline hover:decoration-rose-500 hover:text-rose-500';
-      case 'contact':
-        return 'hover:underline hover:decoration-orange-500 hover:text-orange-500';
-      default:
-        return '';
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
     }
-  };
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
+
+  // Transparent over the home instrument so the strings run to the top edge;
+  // solid everywhere else so scrolling content passes cleanly underneath.
+  const surface = onHome && !menuOpen ? 'bg-transparent' : 'bg-background'
 
   return (
     <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={visible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
-      transition={{ delay: 0.85, duration: 0.75, ease: 'easeOut' }}
-      className="
-        fixed top-0 left-0 w-full
-        font-mono
-        bg-background
-        p-2 sm:p-4
-        z-30
-      "
+      aria-label="Main"
+      data-no-instrument
+      initial={false}
+      animate={visible ? { y: 0, opacity: 1 } : { y: -24, opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: visible && onHome ? 0.5 : 0 }}
+      style={{ pointerEvents: visible ? 'auto' : 'none' }}
+      className={`fixed inset-x-0 top-0 z-40 font-mono transition-colors duration-500 ${surface}`}
     >
-      <div
-        className="
-          max-w-3xl mx-auto
-          flex justify-between items-center
-          px-2 sm:px-4
-          z-40
-        "
-      >
-        {/* Animated Title */}
-        <Link href="/" className="flex items-center no-underline">
-          <motion.div
-            className="
-              flex items-center
-              space-x-0.5 sm:space-x-1
-              text-md sm:text-xl
-            "
+      <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4 sm:px-8 sm:py-5">
+        <Link href="/" aria-label="junsimons.com, home" className="no-underline">
+          <motion.span
+            aria-hidden
+            className="flex text-base sm:text-lg"
             variants={titleVariants}
             initial="hidden"
-            animate="visible"
-            whileHover="hover"
+            animate={visible ? 'visible' : 'hidden'}
           >
-            {[...'junsimons.com'].map((char, i) => (
-              <motion.span key={i} variants={letterVariants}>
-                {char === ' ' ? ' ' : char}
+            {/* each letter is a key: sweep across them to play a little run */}
+            {[...TITLE].map((char, i) => (
+              <motion.span
+                key={i}
+                variants={letterVariants}
+                whileHover={letterHover}
+                onHoverStart={() =>
+                  playNote(frequencyFor(settings.scale, TITLE_FIRST_STEP + i, settings.root), {
+                    strength: 0.45,
+                  })
+                }
+                className="inline-block"
+              >
+                {char}
               </motion.span>
             ))}
-          </motion.div>
+          </motion.span>
         </Link>
 
-        {/* Desktop links */}
-        <div
-          className="
-            hidden sm:flex items-center
-            space-x-6
-            text-xl
-          "
-        >
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} className={linkClassName(l.label)}>
-              {l.label}
-            </Link>
-          ))}
-        </div>
+        {/* desktop links */}
+        <ul className="hidden items-center gap-7 text-base sm:flex sm:text-lg">
+          {links.map((l) => {
+            const active = isActive(l.href)
+            return (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`underline-offset-[6px] transition-colors ${
+                    active ? `underline ${l.active}` : `hover:underline ${l.hover}`
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
 
-        {/* Mobile menu toggle */}
+        {/* mobile toggle: three thin rules that fold into an x */}
         <button
           type="button"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
-          className="sm:hidden relative w-6 h-6 flex items-center justify-center"
+          aria-controls="mobile-menu"
+          className="relative flex h-8 w-8 items-center justify-center sm:hidden"
         >
-          <span className="sr-only">Menu</span>
           <span
-            aria-hidden
-            className={`absolute block w-5 h-px bg-current transition-transform duration-200 ${
+            className={`absolute block h-px w-5 bg-current transition-transform duration-200 ${
               menuOpen ? 'rotate-45' : '-translate-y-1.5'
             }`}
           />
           <span
-            aria-hidden
-            className={`absolute block w-5 h-px bg-current transition-opacity duration-200 ${
+            className={`absolute block h-px w-5 bg-current transition-opacity duration-200 ${
               menuOpen ? 'opacity-0' : 'opacity-100'
             }`}
           />
           <span
-            aria-hidden
-            className={`absolute block w-5 h-px bg-current transition-transform duration-200 ${
+            className={`absolute block h-px w-5 bg-current transition-transform duration-200 ${
               menuOpen ? '-rotate-45' : 'translate-y-1.5'
             }`}
           />
         </button>
       </div>
 
-      {/* Mobile links panel */}
       <AnimatePresence initial={false}>
         {menuOpen && (
-          <motion.div
-            key="mobile-links"
+          <motion.ul
+            id="mobile-menu"
+            key="mobile-menu"
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="sm:hidden max-w-3xl mx-auto px-4 pt-2 pb-1 flex flex-col items-end gap-3 text-lg"
+            className="flex flex-col items-end gap-4 px-6 pb-6 pt-1 text-lg sm:hidden"
           >
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                className={linkClassName(l.label)}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </motion.div>
+            {links.map((l) => {
+              const active = isActive(l.href)
+              return (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={active ? 'page' : undefined}
+                    className={`underline-offset-[6px] transition-colors ${
+                      active ? `underline ${l.active}` : `hover:underline ${l.hover}`
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              )
+            })}
+          </motion.ul>
         )}
       </AnimatePresence>
     </motion.nav>
-  );
-};
-
-export default Navbar;
+  )
+}

@@ -56,8 +56,20 @@ export type Piece = {
   year?: string
   tag?: PieceTag
   description?: string
-  cover?: string // reserved for future hover-preview on the index
   media: MediaItem[]
+}
+
+export type Preview = { kind: 'image' | 'video'; src: string }
+
+/** What /art floats beside the cursor on hover: the piece's first slide. */
+export function previewFor(piece: Piece): Preview | undefined {
+  const first = piece.media[0]
+  if (!first) return undefined
+  if (first.type === 'image') return { kind: 'image', src: first.src }
+  if (first.type === 'video') {
+    return first.poster ? { kind: 'image', src: first.poster } : { kind: 'video', src: first.src }
+  }
+  return first.cover ? { kind: 'image', src: first.cover } : undefined
 }
 
 export const pieces: Piece[] = [
@@ -67,7 +79,6 @@ export const pieces: Piece[] = [
     year: '2026',
     tag: 'photography',
     description: 'digital photographs',
-    cover: art('catskills/stillness.jpg'),
     media: [
       { type: 'image', src: art('catskills/DSCF3252.jpg'), alt: 'sunrise on hunter', caption: 'hunter sunrise'},
       { type: 'image', src: art('catskills/DSCF3168.jpg'), alt: 'morning fog', caption: 'morning fog'},
@@ -97,7 +108,6 @@ export const pieces: Piece[] = [
     year: '2022',
     tag: 'photography',
     description: 'digital photographs',
-    cover: art('maine/Dive.jpg'),
     media: [
       { type: 'image', src: art('maine/LowTide.jpg'), alt: 'low tide', caption: 'low tide' },
       { type: 'image', src: art('maine/Dive.jpg'), alt: 'dive', caption: 'dive' },

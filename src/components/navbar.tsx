@@ -18,18 +18,21 @@ import { useSound } from '@/components/providers/sound'
 const links = [
   {
     href: '/blog',
+    tint: '#15803d', // strings on the home page wash to this on hover
     label: 'projects',
     hover: 'hover:text-green-700 hover:decoration-green-700',
     active: 'text-green-700 decoration-green-700',
   },
   {
     href: '/art',
+    tint: '#f43f5e',
     label: 'art',
     hover: 'hover:text-rose-500 hover:decoration-rose-500',
     active: 'text-rose-500 decoration-rose-500',
   },
   {
     href: '/contact',
+    tint: '#f97316',
     label: 'contact',
     hover: 'hover:text-orange-500 hover:decoration-orange-500',
     active: 'text-orange-500 decoration-orange-500',
@@ -129,6 +132,7 @@ export default function Navbar() {
               <li key={l.href}>
                 <Link
                   href={l.href}
+                  data-tint={l.tint}
                   aria-current={active ? 'page' : undefined}
                   className={`underline-offset-[6px] transition-colors ${
                     active ? `underline ${l.active}` : `hover:underline ${l.hover}`

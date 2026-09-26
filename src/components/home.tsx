@@ -195,6 +195,7 @@ export default function Home() {
             I&rsquo;m a CS masters student at RPI and I also work at&nbsp;
             <a
               href="https://www.ll.mit.edu/"
+              data-tint="#2563eb"
               target="_blank"
               rel="noopener noreferrer"
               className={`${inlineLink} hover:text-blue-600 hover:decoration-blue-600`}
@@ -208,6 +209,7 @@ export default function Home() {
             previously did a co-op at&nbsp;
             <a
               href="https://innovativemedicine.jnj.com/"
+              data-tint="#dc2626"
               target="_blank"
               rel="noopener noreferrer"
               className={`${inlineLink} hover:text-red-600 hover:decoration-red-600`}
@@ -225,6 +227,7 @@ export default function Home() {
         <motion.div variants={itemVariants} className="mt-14">
           <Link
             href="/blog"
+            data-tint="#15803d"
             className="font-mono text-base text-muted underline-offset-4 transition-colors hover:text-green-700 hover:underline sm:text-lg"
           >
             explore my projects →

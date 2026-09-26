@@ -2,6 +2,8 @@
 //
 // The home page background: a row of vertical strings.
 //   - hover glows, click/tap plucks, dragging across strings strums
+//   - hovering any element with data-tint="#hex" (the nav links, the links in
+//     the bio) washes the strings in that color
 //   - the home row keys (a s d f g h j k l ; ') play the strings, h is center
 //   - a loop pedal: space records, space again loops it, space again overdubs;
 //     backspace clears
@@ -60,6 +62,31 @@ const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 const hueFor = (k: number) => (((k * 32) % 360) + 360) % 360
 
+// ---- tiny color helpers (strings blend toward a hovered link's tint) --------
+
+type RGB = [number, number, number]
+
+function parseHex(hex: string, fallback: RGB): RGB {
+  const m = hex.trim().replace('#', '')
+  const full = m.length === 3 ? [...m].map((c) => c + c).join('') : m
+  if (!/^[0-9a-f]{6}$/i.test(full)) return fallback
+  return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16)) as RGB
+}
+
+function hsl(h: number, s: number, l: number): RGB {
+  s /= 100
+  l /= 100
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12
+    return Math.round(255 * (l - s * Math.min(l, 1 - l) * Math.max(-1, Math.min(k - 3, 9 - k, 1))))
+  }
+  return [f(0), f(8), f(4)]
+}
+
+const mix = (a: RGB, b: RGB, t: number): RGB =>
+  [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * t)) as RGB
+const rgb = (c: RGB) => `rgb(${c[0]} ${c[1]} ${c[2]})`
+
 export default function GridInstrument({
   drawIn,
   rippleKey,
@@ -94,9 +121,14 @@ export default function GridInstrument({
     let w = 0
     let h = 0
     let strings: Str[] = []
-    let lineColor = '#cfccc8'
-    let accentColor = '#8fa38b'
+    let lineColor: RGB = [207, 204, 200]
+    let accentColor: RGB = [143, 163, 139]
     let rainbow = false
+    // hovering a link with data-tint washes the strings in its color
+    let tintTarget: string | null = null
+    let tintColor: RGB = [0, 0, 0] // the hovered link's color
+    let tintShown: RGB = [0, 0, 0] // what's drawn; cross-fades between links
+    let tintAmount = 0
     let hoverX: number | null = null
     let dragX: number | null = null
     let raf = 0
@@ -140,8 +172,8 @@ export default function GridInstrument({
       }
 
       const css = getComputedStyle(document.documentElement)
-      lineColor = css.getPropertyValue('--grid-line').trim() || lineColor
-      accentColor = css.getPropertyValue('--grid-accent').trim() || accentColor
+      lineColor = parseHex(css.getPropertyValue('--grid-line'), lineColor)
+      accentColor = parseHex(css.getPropertyValue('--grid-accent'), accentColor)
       kick()
     }
     relayoutRef.current = layout
@@ -180,6 +212,17 @@ export default function GridInstrument({
       const ringSeconds = 0.25 + live.current.settings.sustain * 0.2
       let busy = false
 
+      const tintGoal = tintTarget ? 1 : 0
+      tintAmount += (tintGoal - tintAmount) * 0.14
+      if (Math.abs(tintGoal - tintAmount) < 0.005) tintAmount = tintGoal
+      else busy = true
+      const drift = Math.max(...tintShown.map((v, i) => Math.abs(v - tintColor[i])))
+      if (drift <= 2) tintShown = tintColor
+      else {
+        tintShown = mix(tintShown, tintColor, 0.14)
+        busy = true
+      }
+
       for (const s of strings) {
         // draw-in: the center string first, each one growing out from the middle
         let grow = 1
@@ -217,12 +260,18 @@ export default function GridInstrument({
         const x = s.x + 0.5 // crisp 1px lines
         const bendY = clamp(s.pluckY, top + (bottom - top) * 0.15, bottom - (bottom - top) * 0.15)
         const hue = hueFor(s.k)
+        let base = rainbow ? hsl(hue, 45, 74) : lineColor
+        let accent = rainbow ? hsl(hue, 75, 52) : accentColor
+        if (tintAmount > 0) {
+          base = mix(base, tintShown, tintAmount * 0.6)
+          accent = mix(accent, tintShown, tintAmount)
+        }
 
-        stroke(x, top, bottom, bendY, swing, rainbow ? `hsl(${hue} 45% 74%)` : lineColor, 1)
+        stroke(x, top, bottom, bendY, swing, rgb(base), 1)
         const glow = Math.max(s.hover, ring)
         if (glow > 0.01) {
           g.globalAlpha = glow
-          stroke(x, top, bottom, bendY, swing, rainbow ? `hsl(${hue} 75% 52%)` : accentColor, 1 + 1.75 * glow)
+          stroke(x, top, bottom, bendY, swing, rgb(accent), 1 + 1.75 * glow)
           g.globalAlpha = 1
         }
       }
@@ -354,6 +403,15 @@ export default function GridInstrument({
     function onPointerMove(e: PointerEvent) {
       if (e.pointerType === 'mouse') {
         hoverX = e.clientX
+        const tinted = e.target instanceof Element ? e.target.closest<HTMLElement>('[data-tint]') : null
+        const next = tinted?.dataset.tint ?? null
+        if (next !== tintTarget) {
+          tintTarget = next
+          if (next) {
+            tintColor = parseHex(next, tintColor)
+            if (tintAmount < 0.01) tintShown = tintColor // fading in from gray: start at the new color
+          }
+        }
         kick()
       }
       if (dragX === null) return
@@ -387,6 +445,7 @@ export default function GridInstrument({
     function onMouseOut(e: MouseEvent) {
       if (!e.relatedTarget) {
         hoverX = null
+        tintTarget = null
         kick()
       }
     }

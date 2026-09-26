@@ -109,7 +109,9 @@ export default function Navbar() {
                 variants={letterVariants}
                 whileHover={letterHover}
                 onHoverStart={() =>
-                  playNote(frequencyFor(settings.scale, TITLE_FIRST_STEP + i), { strength: 0.45 })
+                  playNote(frequencyFor(settings.scale, TITLE_FIRST_STEP + i, settings.root), {
+                    strength: 0.45,
+                  })
                 }
                 className="inline-block"
               >

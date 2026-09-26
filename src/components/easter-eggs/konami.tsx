@@ -49,7 +49,10 @@ export default function Konami() {
       window.dispatchEvent(new Event('site:konami'))
       const { playNote, settings } = live.current
       for (let step = 0; step < FLOURISH_STEPS; step++) {
-        playNote(frequencyFor(settings.scale, step), { strength: 0.55, delay: step * 0.065 })
+        playNote(frequencyFor(settings.scale, step, settings.root), {
+          strength: 0.55,
+          delay: step * 0.065,
+        })
       }
       setShown(true)
       window.clearTimeout(hideTimer)

@@ -33,6 +33,7 @@ declare global {
 export type Settings = {
   voice: VoiceName
   scale: ScaleName
+  root: number // key: semitones above C, 0..11
   reverb: number // wet amount, 0..1
   tail: number // reverb length, seconds
   sustain: number // how long notes ring, seconds
@@ -42,6 +43,7 @@ export type Settings = {
 export const DEFAULT_SETTINGS: Settings = {
   voice: 'pluck',
   scale: 'pentatonic',
+  root: 0,
   reverb: 0.35,
   tail: 2.8,
   sustain: 1.6,

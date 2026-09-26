@@ -9,7 +9,7 @@ import { AnimatePresence, motion, useAnimate } from 'framer-motion'
 import { useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { useSound } from '@/components/providers/sound'
 import type { LoopControls, LoopStatus } from './grid-instrument'
-import { SCALES, nextScale } from './scales'
+import { NOTE_NAMES, SCALES, nextScale } from './scales'
 import TuningDrawer from './tuning-drawer'
 import { VOICES, nextVoice } from './voices'
 
@@ -82,7 +82,7 @@ export default function SoundControls({ visible = true, loop, loopControls }: So
           className="transition-colors hover:text-foreground"
         >
           <span aria-hidden>♪ </span>
-          {SCALES[settings.scale].label}
+          {NOTE_NAMES[settings.root]} {SCALES[settings.scale].label}
         </button>
 
         <button

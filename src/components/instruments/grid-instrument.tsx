@@ -242,7 +242,8 @@ export default function GridInstrument({
 
     function sound(k: number, strength: number, delayMs: number, nudgeIfMuted: boolean) {
       const { settings, playNote, requestNudge } = live.current
-      const played = playNote(frequencyFor(settings.scale, k), { strength, delay: delayMs / 1000 })
+      const hz = frequencyFor(settings.scale, k, settings.root)
+      const played = playNote(hz, { strength, delay: delayMs / 1000 })
       if (!played && nudgeIfMuted) requestNudge()
     }
 

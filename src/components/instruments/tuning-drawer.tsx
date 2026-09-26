@@ -1,13 +1,14 @@
 // src/components/instruments/tuning-drawer.tsx
 //
-// The little panel behind the ⋯ on the home page: reverb, tail, sustain, and
-// string spacing, plus the loop pedal's controls and a key legend.
+// The little panel behind the ⋯ on the home page: key, reverb, tail, sustain,
+// and string spacing, plus the loop pedal's controls and a key legend.
 'use client'
 
 import { motion } from 'framer-motion'
 import { useEffect, useState, type MutableRefObject } from 'react'
 import { useSound } from '@/components/providers/sound'
 import type { LoopControls, LoopStatus } from './grid-instrument'
+import { NOTE_NAMES } from './scales'
 
 interface TuningDrawerProps {
   loop?: LoopStatus
@@ -56,6 +57,15 @@ export default function TuningDrawer({ loop, loopControls }: TuningDrawerProps) 
         </button>
       </div>
 
+      <Knob
+        label="key"
+        value={settings.root}
+        min={0}
+        max={11}
+        step={1}
+        display={NOTE_NAMES[settings.root]}
+        onChange={(root) => updateSettings({ root })}
+      />
       <Knob
         label="reverb"
         value={settings.reverb}

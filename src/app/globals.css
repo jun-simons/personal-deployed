@@ -58,6 +58,14 @@ html[data-theme="dark"] ::selection {
   border-radius: 2px;
 }
 
+/* Wide display equations scroll sideways on small screens instead of
+   pushing the page wider. */
+.prose .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
 /* Hairline sliders for the tuning drawer. */
 .tuning-range {
   -webkit-appearance: none;

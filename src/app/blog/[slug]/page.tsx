@@ -1,14 +1,23 @@
 // app/blog/[slug]/page.tsx
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { marked } from 'marked'
+import { Marked } from 'marked'
+import markedKatex from 'marked-katex-extension'
+import 'katex/dist/katex.min.css'
 import { getAllPostMeta, getPost } from '@/app/lib/posts'
 import Tag from '@/components/tag'
 
-marked.setOptions({
-  gfm: true,
-  breaks: true, // treat single newlines as <br>
-})
+// Math is rendered to HTML at build time, so readers don't download KaTeX's
+// JavaScript, just its stylesheet and fonts. Inline math is $...$, display
+// math is $$...$$ (on its own lines). A bad formula shows as red source text
+// instead of breaking the build.
+const markdown = new Marked(
+  {
+    gfm: true,
+    breaks: true, // treat single newlines as <br>
+  },
+  markedKatex({ throwOnError: false })
+)
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -29,7 +38,7 @@ export default async function Post({ params }: Params) {
   const { slug } = await params
   const { content } = getPost(slug)
   const meta = getAllPostMeta().find((p) => p.slug === slug)!
-  const html = await marked(content)
+  const html = await markdown.parse(content)
 
   return (
     <main className="mx-auto max-w-2xl px-6 pb-28 pt-28 sm:px-8 sm:pt-36">

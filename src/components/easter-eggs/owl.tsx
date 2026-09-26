@@ -2,17 +2,21 @@
 //
 // The site owl (same line-art owl as the favicon). Its eyes follow the pointer
 // and it blinks now and then. <IdleOwl /> peeks up from the bottom-right corner
-// after a while of no activity, or when the Konami code is entered; clicking it
-// makes it hoot. <PerchedOwl /> is a clickable owl that just sits there (404).
+// 15s after every page load, again after a while of no activity, and dances
+// when the Konami code is entered; clicking it makes it hoot. <PerchedOwl /> is
+// a clickable owl that just sits there (404).
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useSound } from '@/components/providers/sound'
 
+const HELLO_AFTER_MS = 15_000
+const HELLO_MS = 10_000
 const IDLE_MS = 45_000
 const PEEK_MS = 14_000
 const COOLDOWN_MS = 120_000
+const DANCE_MS = 2200
 
 export function OwlFigure({ className }: { className?: string }) {
   const svgRef = useRef<SVGSVGElement>(null)
@@ -152,6 +156,8 @@ export default function IdleOwl() {
   const lastActivity = useRef(0)
   const lastShown = useRef(-Infinity)
   const hideTimer = useRef(0)
+  const danceTimer = useRef(0)
+  const [dancing, setDancing] = useState(false)
   const hootRef = useRef(hoot)
 
   useEffect(() => {
@@ -194,19 +200,30 @@ export default function IdleOwl() {
       }
     }, 2000)
 
+    // always drop by once, a little while after the page loads
+    const hello = window.setTimeout(() => {
+      if (!visibleRef.current) appear(HELLO_MS)
+    }, HELLO_AFTER_MS)
+
+    // Konami: pop all the way up, dance, and hoot
     const onKonami = () => {
-      appear()
+      appear(DANCE_MS + 4000)
+      setDancing(true)
+      window.clearTimeout(danceTimer.current)
+      danceTimer.current = window.setTimeout(() => setDancing(false), DANCE_MS)
       window.setTimeout(() => {
         hootRef.current()
         speak()
-      }, 500)
+      }, 350)
     }
     window.addEventListener('site:konami', onKonami)
 
     return () => {
       events.forEach((ev) => window.removeEventListener(ev, bump))
       window.clearInterval(tick)
+      window.clearTimeout(hello)
       window.clearTimeout(hideTimer.current)
+      window.clearTimeout(danceTimer.current)
       window.removeEventListener('site:konami', onKonami)
     }
   }, [appear, speak])
@@ -215,12 +232,13 @@ export default function IdleOwl() {
     <motion.div
       data-no-instrument
       initial={false}
-      animate={{ y: visible ? '38%' : '115%' }}
+      animate={{ y: dancing ? '6%' : visible ? '38%' : '115%' }}
       transition={{ type: 'spring', stiffness: 170, damping: 17 }}
       className="pointer-events-none fixed bottom-0 right-6 z-30 sm:right-12"
     >
       <Speech show={speaking && visible} className="-top-5 right-full mr-1" />
-      <button
+      <AnimatePresence>{dancing && <DanceNotes />}</AnimatePresence>
+      <motion.button
         type="button"
         aria-label="an owl. click it"
         tabIndex={visible ? 0 : -1}
@@ -228,12 +246,45 @@ export default function IdleOwl() {
         onClick={() => {
           hoot()
           speak()
-          appear(2600) // say hi, then duck back down
+          if (!dancing) appear(2600) // say hi, then duck back down
         }}
+        animate={
+          dancing
+            ? { rotate: [0, -14, 12, -14, 12, -8, 0], y: [0, -10, 0, -12, 0, -6, 0] }
+            : { rotate: 0, y: 0 }
+        }
+        transition={dancing ? { duration: DANCE_MS / 1000, ease: 'easeInOut' } : { duration: 0.3 }}
+        style={{ transformOrigin: '50% 90%' }}
         className="pointer-events-auto block text-foreground"
       >
         <OwlFigure className="h-14 w-14 sm:h-16 sm:w-16" />
-      </button>
+      </motion.button>
     </motion.div>
+  )
+}
+
+// A few notes that float up and fade while the owl dances.
+function DanceNotes() {
+  return (
+    <>
+      {[
+        { glyph: '♪', left: '-10%', delay: 0.1 },
+        { glyph: '♫', left: '70%', delay: 0.6 },
+        { glyph: '♪', left: '25%', delay: 1.1 },
+      ].map((n, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          initial={{ opacity: 0, y: 0 }}
+          animate={{ opacity: [0, 1, 0], y: -44 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.3, delay: n.delay, ease: 'easeOut' }}
+          style={{ left: n.left }}
+          className="pointer-events-none absolute -top-2 font-mono text-sm text-muted"
+        >
+          {n.glyph}
+        </motion.span>
+      ))}
+    </>
   )
 }

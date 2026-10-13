@@ -15,7 +15,7 @@ export default function Blog() {
   return (
     <main className="mx-auto max-w-3xl px-6 pb-28 pt-28 sm:px-8 sm:pt-36">
       <PageHeader title="posts / projects">
-        things i&rsquo;ve built and things i&rsquo;ve written.
+       a few things ive done outside of work
       </PageHeader>
 
       <IndexList

@@ -25,7 +25,7 @@ export default async function ArtPiece({ params }: Params) {
 
   return (
     <main className="mx-auto flex h-[100svh] w-full max-w-6xl flex-col pb-2 pt-20 sm:pt-24">
-      <PieceView piece={piece} />
+      <PieceView piece={piece} index={pieces.indexOf(piece)} total={pieces.length} />
     </main>
   )
 }

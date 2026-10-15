@@ -55,6 +55,8 @@ export type Piece = {
   title: string
   year?: string
   tag?: PieceTag
+  /** Shown when the "about" button on the piece's page is opened. One per
+   *  piece (not per slide); leave a blank line between paragraphs. */
   description?: string
   media: MediaItem[]
 }
@@ -85,6 +87,20 @@ export const pieces: Piece[] = [
       { type: 'image', src: art('catskills/DSCF3321.jpg'), alt: 'sunrise on hunter 2', caption: 'hunter sunrise 2' },
       { type: 'image', src: art('catskills/stillness.jpg'), alt: 'stillness', caption: 'stillness in the hut'},
       { type: 'image', src: art('catskills/DSCF3177.jpg'), alt: 'view from mt tremper', caption: 'from tremper'},
+    ],
+  },
+  {
+    slug: 'diffusion-1',
+    title: 'diffusion 1',
+    year: '2024',
+    tag: 'generative',
+    description: 'Made with a reaction-diffusion model in C++ and openFrameworks.',
+    media: [
+      {
+        type: 'video',
+        src: art('generative/Diffusion1.mp4'),
+        loop: true,
+      },
     ],
   },
  {

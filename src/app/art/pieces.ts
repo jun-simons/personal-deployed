@@ -55,9 +55,12 @@ export type Piece = {
   title: string
   year?: string
   tag?: PieceTag
-  /** Shown when the "about" button on the piece's page is opened. One per
-   *  piece (not per slide); leave a blank line between paragraphs. */
+  /** Short caption, always shown under the title on the piece's page. */
   description?: string
+  /** Longer write-up, printed on a label on the "back" of the piece when the
+   *  about button is pressed. One per piece (not per slide); leave a blank line
+   *  between paragraphs. No `about` = no button. */
+  about?: string
   media: MediaItem[]
 }
 
@@ -81,6 +84,9 @@ export const pieces: Piece[] = [
     year: '2026',
     tag: 'photography',
     description: 'digital photographs',
+    about: `Photographs from the Catskills around sunrise: the first light on Hunter, fog sitting in the valleys, a quiet moment inside the hut, and the view from Tremper.
+
+All shot digitally.`,
     media: [
       { type: 'image', src: art('catskills/DSCF3252.jpg'), alt: 'sunrise on hunter', caption: 'hunter sunrise'},
       { type: 'image', src: art('catskills/DSCF3168.jpg'), alt: 'morning fog', caption: 'morning fog'},
@@ -95,6 +101,9 @@ export const pieces: Piece[] = [
     year: '2024',
     tag: 'generative',
     description: 'Made with a reaction-diffusion model in C++ and openFrameworks.',
+    about: `A reaction-diffusion simulation written in C++ with openFrameworks.
+
+Two virtual chemicals spread across a grid and react wherever they meet. Small differences in how fast each one spreads and reacts are enough to grow spots, stripes, and cell-like shapes that seem almost alive.`,
     media: [
       {
         type: 'video',
@@ -108,6 +117,9 @@ export const pieces: Piece[] = [
     title: 'transport 1',
     year: '2023',
     description: 'Generative biological network built for live exhibition in C++ & openFrameworks. I made the audio in SuperCollider',
+    about: `A generative biological network, built in C++ with openFrameworks to run live in an exhibition. The piece generates itself as it plays rather than following a fixed sequence.
+
+The audio was made in SuperCollider.`,
     tag: 'generative',
     media: [
       {
@@ -124,6 +136,9 @@ export const pieces: Piece[] = [
     year: '2022',
     tag: 'photography',
     description: 'digital photographs',
+    about: `Photographs from a trip to Maine: low tide, a dive, and the weeds along the shore.
+
+All shot digitally.`,
     media: [
       { type: 'image', src: art('maine/LowTide.jpg'), alt: 'low tide', caption: 'low tide' },
       { type: 'image', src: art('maine/Dive.jpg'), alt: 'dive', caption: 'dive' },

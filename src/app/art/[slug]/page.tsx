@@ -2,8 +2,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { pieces, getPiece } from '../pieces'
-import PieceHeader from '@/components/art/piece-header'
-import Slideshow from '@/components/art/slideshow'
+import PieceView from '@/components/art/piece-view'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -26,8 +25,7 @@ export default async function ArtPiece({ params }: Params) {
 
   return (
     <main className="mx-auto flex h-[100svh] w-full max-w-6xl flex-col pb-2 pt-20 sm:pt-24">
-      <PieceHeader title={piece.title} year={piece.year} description={piece.description} />
-      <Slideshow media={piece.media} />
+      <PieceView piece={piece} />
     </main>
   )
 }

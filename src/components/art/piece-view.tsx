@@ -3,10 +3,9 @@
 // An art piece's page: header (back link, title, year), the always-visible
 // caption, and the slideshow. If the piece has an `about` write-up, the
 // "(about)" button melts the artwork away (a turbulent SVG displacement while
-// it stretches and drains downward), leaving a gallery wall text in its place:
-// a column of details on the left, the write-up on the right, words coming
-// into focus one by one. "(close)" lets the piece re-form. One write-up per
-// piece, not per slide.
+// it stretches and drains downward), leaving the write-up in its place, words
+// coming into focus one by one. "(close)" lets the piece re-form. One write-up
+// per piece, not per slide.
 'use client'
 
 import {
@@ -17,7 +16,6 @@ import {
   useMotionValueEvent,
   useReducedMotion,
   useTransform,
-  type Variants,
 } from 'framer-motion'
 import Link from 'next/link'
 import { Fragment, useEffect, useId, useRef, useState } from 'react'
@@ -27,13 +25,7 @@ import Slideshow from './slideshow'
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
 const EASE_IN = [0.7, 0, 0.84, 0] as const
 
-interface PieceViewProps {
-  piece: Piece
-  index: number // position in the /art list, for the "02 / 04" detail
-  total: number
-}
-
-export default function PieceView({ piece, index, total }: PieceViewProps) {
+export default function PieceView({ piece }: { piece: Piece }) {
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
   const mediaRef = useRef<HTMLDivElement>(null)
@@ -150,7 +142,7 @@ export default function PieceView({ piece, index, total }: PieceViewProps) {
               exit={{ opacity: 0, transition: { duration: 0.25 } }}
               className="absolute inset-0 overflow-y-auto px-6 pb-8 pt-2 sm:px-8 sm:pt-6"
             >
-              <WallText piece={piece} paragraphs={paragraphs} index={index} total={total} reduce={!!reduce} />
+              <WallText paragraphs={paragraphs} reduce={!!reduce} />
             </motion.section>
           )}
         </AnimatePresence>
@@ -161,69 +153,12 @@ export default function PieceView({ piece, index, total }: PieceViewProps) {
 
 // ---- the wall text -----------------------------------------------------------
 
-const detailsVariants: Variants = {
-  hidden: {},
-  shown: { transition: { staggerChildren: 0.07, delayChildren: 0.75 } },
-}
-
-const detailVariants: Variants = {
-  hidden: { opacity: 0, x: -10 },
-  shown: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE_OUT } },
-}
-
-function mediumOf(piece: Piece) {
-  const count = (type: string) => piece.media.filter((m) => m.type === type).length
-  const parts = [
-    [count('image'), 'photograph'],
-    [count('video'), 'video'],
-    [count('audio'), 'recording'],
-  ] as const
-  return parts
-    .filter(([n]) => n > 0)
-    .map(([n, word]) => `${n} ${word}${n === 1 ? '' : 's'}`)
-    .join(', ')
-}
-
-function WallText({
-  piece,
-  paragraphs,
-  index,
-  total,
-  reduce,
-}: {
-  piece: Piece
-  paragraphs: string[]
-  index: number
-  total: number
-  reduce: boolean
-}) {
-  const pad = (n: number) => String(n).padStart(2, '0')
-  const details = [
-    ['no.', `${pad(index + 1)} / ${pad(total)}`],
-    ['year', piece.year],
-    ['type', piece.tag],
-    ['media', mediumOf(piece)],
-  ].filter((d): d is [string, string] => Boolean(d[1]))
-
+function WallText({ paragraphs, reduce }: { paragraphs: string[]; reduce: boolean }) {
   const [lead, ...rest] = paragraphs
   const restDelay = 0.8 + lead.split(/\s+/).length * 0.014
 
   return (
-    <div className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-[11rem_1fr] sm:gap-16">
-      <motion.dl
-        variants={detailsVariants}
-        initial="hidden"
-        animate="shown"
-        className="grid grid-cols-2 gap-x-6 self-start font-mono text-xs sm:grid-cols-1"
-      >
-        {details.map(([label, value]) => (
-          <motion.div key={label} variants={detailVariants} className="border-t border-rule py-2.5">
-            <dt className="uppercase tracking-[0.18em] text-faint">{label}</dt>
-            <dd className="mt-1 text-foreground">{value}</dd>
-          </motion.div>
-        ))}
-      </motion.dl>
-
+    <div>
       <div className="max-w-2xl">
         <Words
           text={lead}

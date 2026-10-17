@@ -77,6 +77,19 @@ export function previewFor(piece: Piece): Preview | undefined {
   return first.cover ? { kind: 'image', src: first.cover } : undefined
 }
 
+    // On the catskills:
+
+    // Sunrises in the catskills are unpredictable and change so quickly. Hiking up in the dark you have no clue what to expect, and only when the first glow hits the horizon
+    // do you know whether clouds fill the valleys, or whether wisps of fog will diffuse the sun's shape. And even after that moment, everything changes again a few times. All these pictures
+    // come straight out of my camera unedited, barring fujifilm's internal processing, but photos taken minutes apart can have drastically different colors.
+    
+    // The catskills have an extra special bit of meaning to me in the context of the many artists that viewed these landscapes in the hudson river school of painting. 
+    // If sometimes I feel like a photograph is romanticized, maybe by nature of a selective composition, I remember how Thomas Cole's works, however idealized, have in many ways
+    // a greater truth in nature than a strictly faithful reproduction of the scene. I photograph while hiking rather than hike with intent to photograph,
+    // so its fun to capture sponetaneous moments of sunrise for a fraction of that glory.
+
+    // Fujifilm XT-50, 16-55 f2.8
+
 export const pieces: Piece[] = [
   {
     slug: 'catskills',
@@ -85,17 +98,6 @@ export const pieces: Piece[] = [
     tag: 'photography',
     description: 'digital photographs',
     about: `
-    On the catskills:
-
-    Sunrises in the catskills are unpredictable and change so quickly. Hiking up in the dark you have no clue what to expect, and only when the first glow hits the horizon
-    do you know whether clouds fill the valleys, or whether wisps of fog will diffuse the sun's shape. And even after that moment, everything changes again a few times. All these pictures
-    come straight out of my camera unedited, barring fujifilm's internal processing, but photos taken minutes apart can have drastically different colors.
-    
-    The catskills have an extra special bit of meaning to me in the context of the many artists that viewed these landscapes in the hudson river school of painting. 
-    If sometimes I feel like a photograph is romanticized, maybe by nature of a selective composition, I remember how Thomas Cole's works, however idealized, have in many ways
-    a greater truth in nature than a strictly faithful reproduction of the scene. I photograph while hiking rather than hike with intent to photograph,
-    so its fun to capture sponetaneous moments of sunrise for a fraction of that glory.
-
     Fujifilm XT-50, 16-55 f2.8
     `,
     media: [

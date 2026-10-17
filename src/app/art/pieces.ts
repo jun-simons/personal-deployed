@@ -84,9 +84,20 @@ export const pieces: Piece[] = [
     year: '2026',
     tag: 'photography',
     description: 'digital photographs',
-    about: `Photographs from the Catskills around sunrise: the first light on Hunter, fog sitting in the valleys, a quiet moment inside the hut, and the view from Tremper.
+    about: `
+    On the catskills:
 
-All shot digitally.`,
+    Sunrises in the catskills are unpredictable and change so quickly. Hiking up in the dark you have no clue what to expect, and only when the first glow hits the horizon
+    do you know whether clouds fill the valleys, or whether wisps of fog will diffuse the sun's shape. And even after that moment, everything changes again a few times. All these pictures
+    come straight out of my camera unedited, barring fujifilm's internal processing, but photos taken minutes apart can have drastically different colors.
+    
+    The catskills have an extra special bit of meaning to me in the context of the many artists that viewed these landscapes in the hudson river school of painting. 
+    If sometimes I feel like a photograph is romanticized, maybe by nature of a selective composition, I remember how Thomas Cole's works, however idealized, have in many ways
+    a greater truth in nature than a strictly faithful reproduction of the scene. I photograph while hiking rather than hike with intent to photograph,
+    so its fun to capture sponetaneous moments of sunrise for a fraction of that glory.
+
+    Fujifilm XT-50, 16-55 f2.8
+    `,
     media: [
       { type: 'image', src: art('catskills/DSCF3252.jpg'), alt: 'sunrise on hunter', caption: 'hunter sunrise'},
       { type: 'image', src: art('catskills/DSCF3168.jpg'), alt: 'morning fog', caption: 'morning fog'},
@@ -100,10 +111,9 @@ All shot digitally.`,
     title: 'diffusion 1',
     year: '2024',
     tag: 'generative',
-    description: 'Made with a reaction-diffusion model in C++ and openFrameworks.',
-    about: `A reaction-diffusion simulation written in C++ with openFrameworks.
-
-Two virtual chemicals spread across a grid and react wherever they meet. Small differences in how fast each one spreads and reacts are enough to grow spots, stripes, and cell-like shapes that seem almost alive.`,
+    description: 'generative reaction-diffusion model built with C++ and openFrameworks.',
+    about: `Initial iteration from generative experiments with a reaction diffusion system, modeling spread and interaction fluid organic systems. 
+    A mathematical modeling and iteration engine in C++ underlies the openFrameworks rendering engine for graphics.`,
     media: [
       {
         type: 'video',
@@ -116,10 +126,13 @@ Two virtual chemicals spread across a grid and react wherever they meet. Small d
     slug: 'transport-1',
     title: 'transport 1',
     year: '2023',
-    description: 'Generative biological network built for live exhibition in C++ & openFrameworks. I made the audio in SuperCollider',
-    about: `A generative biological network, built in C++ with openFrameworks to run live in an exhibition. The piece generates itself as it plays rather than following a fixed sequence.
+    description: 'generative biological network built with C++, openFrameworks, and SuperCollider',
+    about: `Transport-1 is a generative biological network built in C++ with openFrameworks rendering.
+    It was designed for live exhibition, where individual "agents" behave according to probabilistic rules, and parameters to the network can be adjusted live.
 
-The audio was made in SuperCollider.`,
+
+
+    I created the audio in SuperCollider with Supernova and SCNvim.`,
     tag: 'generative',
     media: [
       {
@@ -136,9 +149,7 @@ The audio was made in SuperCollider.`,
     year: '2022',
     tag: 'photography',
     description: 'digital photographs',
-    about: `Photographs from a trip to Maine: low tide, a dive, and the weeds along the shore.
-
-All shot digitally.`,
+    about: `Digital Photographs, Nikon D850`,
     media: [
       { type: 'image', src: art('maine/LowTide.jpg'), alt: 'low tide', caption: 'low tide' },
       { type: 'image', src: art('maine/Dive.jpg'), alt: 'dive', caption: 'dive' },
